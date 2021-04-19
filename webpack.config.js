@@ -12,12 +12,34 @@ module.exports = (env, argv) => {
   const { mode = 'development' } = argv;
   const isProduction = mode === 'production';
 
+  // Styles
+  const styleLoader = (modules) => [
+    // isProduction ? {
+    //   loader: MiniCssExtractPlugin.loader,
+    // } : 
+    { loader: 'style-loader' },
+    {
+      loader: 'css-loader',
+      options: {
+        modules,
+        sourceMap: !isProduction, 
+      }
+    },
+    {
+      loader: 'postcss-loader',
+      options: {
+        sourceMap: !isProduction,
+      },
+    }
+  ]
+
   // Plugins
   const plugins = [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, srcDir, 'index.html')
     }),
   ]
+
   return {
     mode,
     entry: {
@@ -36,7 +58,16 @@ module.exports = (env, argv) => {
           exclude: '/node_modules/'
         },
         {
-          test: /\.(png|jpg|pdf)$/,
+          test: /\.(s?css)$/,
+          exclude: /\.module\.css$/,
+          use: styleLoader(false)
+        },
+        {
+          test: /\.module\.css$/,
+          use: styleLoader(true)
+        },
+        {
+          test: /\.(png|jpg|pdf|svg)$/,
           use: [
             {
               loader: 'file-loader',
@@ -54,7 +85,7 @@ module.exports = (env, argv) => {
       path: path.resolve(__dirname, distDir),
       publicPath: '/',
     },
-    devtool: isProduction ? undefined : 'inline-source-map',
+    devtool: undefined, // isProduction ? undefined : 'inline-source-map',
     devServer: {
       index: 'index.html',
       contentBase: path.join(__dirname, distDir),
@@ -63,7 +94,6 @@ module.exports = (env, argv) => {
       port: 3000,
     },
     plugins,
-
     optimization: {
       minimizer: [
         new TerserPlugin({

@@ -1,0 +1,9 @@
+.container {
+  appearance: none;
+  height: 32px;
+  width: 100%;
+  background: url(~assets/devider.svg) center no-repeat;
+  border: none;
+  outline: none;
+  margin: 20px 0 80px;
+}

@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
-import { initDetection } from 'components/detector/hooks'
+import { initDetection } from 'detector/hooks'
+import { Footer, Centered, BrowserIcons, Logo } from 'components/ui'
 
 export function Welcome() {
   const history = useHistory()
@@ -11,8 +12,17 @@ export function Welcome() {
 
   return (
     <>
-      <h2>Cross Browser Cookie Demo</h2>
-      <button onClick={handleStart}>Get my identifier</button>
+      <Centered>
+        <Logo />
+        <h1>Cross-Browser <br/> Cookie</h1>
+        <h4>
+          World's first fast and reliable desktop cross-browser tracking vulnerability!
+          Works with the Firefox, Chrome, Safari and even Tor browsers!
+        </h4>
+        <BrowserIcons />
+        <button onClick={handleStart}>Get My Identifier</button>
+      </Centered>
+      <Footer />
     </>
   )
 }

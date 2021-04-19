@@ -1,0 +1,51 @@
+html,
+body {
+  margin: 0;
+  color: #332550;
+  background: url(~assets/bg.jpg) top/100% no-repeat #f6edee;
+  font-family: 'Quicksand', sans-serif, Arial;
+  font-weight: 600;
+  min-height: 100%;
+  position: relative;
+}
+
+#app {
+  min-height: 100%;
+  padding-bottom: 80px;
+}
+
+h1 {
+  font-family: 'Dela Gothic One', sans-serif, Arial;
+  font-size: 52px;
+  margin: 0 0 40px;
+  padding: 0;
+}
+
+h4 {
+  font-size: 20px;
+  line-height: 34px;
+  margin: 0 0 4px;
+  padding: 0;
+}
+
+p {
+  font-size: 16px;
+  color: #847b98;
+  line-height: 24px;
+  margin: 0 0 4px;
+  padding: 0;
+}
+
+button {
+  background: #ffffff;
+  box-shadow: 0px 0px 160px rgba(255, 43, 170, 0.24);
+  border-radius: 40px;
+  border: 0;
+  font-size: 20px;
+  font-family: 'Quicksand', sans-serif, Arial;
+  line-height: 40px;
+  cursor: pointer;
+  color: #332550;
+  padding: 16px 32px;
+  appearance: none;
+}

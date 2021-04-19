@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { detectNext } from 'components/detector/detection'
+import { detectNext } from 'detector/detection'
 
 export function Popup() {
   useEffect(() => {

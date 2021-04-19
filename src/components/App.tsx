@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { initWindowMessaging } from './detector/window'
+import { initWindowMessaging } from '../detector/window'
 import * as routes from './routes'
 
 initWindowMessaging()
@@ -12,6 +12,7 @@ export default function App() {
       <Route path='/blank' component={routes.Blank} />
       <Route path='/popup' component={routes.Popup} />
       <Route path='/progress' component={routes.Progress} />
+      <Route path='/result' component={routes.Result} />
       <Route path='/' component={routes.Welcome} />
     </Switch>
   )

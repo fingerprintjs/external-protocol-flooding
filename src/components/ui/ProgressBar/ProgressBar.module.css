@@ -1,0 +1,17 @@
+.container {
+  width: 100%;
+  height: 4px;
+  max-width: 608px;
+  margin: 0 auto;
+  background: rgb(174, 108, 148, 0.24);
+  margin: 48px 0 64px;
+  border-radius: 4px;
+}
+
+.bar {
+  height: 4px;
+  border-radius: 4px;
+  background: #ae6c94;
+  width: 0px;
+  transition: 500ms ease-out;
+}
