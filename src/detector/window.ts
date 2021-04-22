@@ -23,6 +23,23 @@ export function createAdditionalWindow() {
   return handler
 }
 
+export function listenOnce(type: keyof WindowEventMap, callback: (event: Event) => unknown) {
+  handler?.addEventListener(type, callback, { once: true })
+  return () => handler?.removeEventListener(type, callback)
+}
+
+export function listenAll<T>(target: T) {
+  const keys = Object.keys(target)
+  const start = performance.now()
+
+  for (const key of keys) {
+    if (key.slice(0, 2) === 'on') {
+      // @ts-ignore
+      target[key] = (e: unknown) => console.log(performance.now() - start, handler?.location.href, e)
+    }
+  }
+}
+
 function getInitialUrlForPopup() {
   const target = getBrowserFamily()
   return target === BrowserFamily.Safari ? '/popup' : 'about:blank'
@@ -90,4 +107,44 @@ export function initWindowMessaging() {
  */
 export function getAdditionalWindow() {
   return handler || createAdditionalWindow()
+}
+
+/**
+ * Wait until the Chrome PDF extension is loaded
+ */
+export function waitForEmbedElemet() {
+  return new Promise<void>((resolve) => {
+    const intervalId = setInterval(() => {
+      const embeds = handler?.document.embeds
+
+      if (embeds && embeds.length > 0) {
+        clearInterval(intervalId)
+
+        setTimeout(() => {
+          resolve()
+        }, 200)
+      }
+    })
+  })
+}
+
+/**
+ * Wait after cross-origin loading
+ */
+export function waitForLocation(href: string | '-1') {
+  return new Promise<void>((resolve) => {
+    const intervalId = setInterval(() => {
+      try {
+        if (handler?.location.href === href) {
+          clearInterval(intervalId)
+          resolve()
+        }
+      } catch (e) {
+        if (href === '-1') {
+          clearInterval(intervalId)
+          resolve()
+        }
+      }
+    })
+  })
 }

@@ -24,6 +24,9 @@ export type ControlMessage =
   | {
       type: 'force_reload'
     }
+  | {
+      type: 'pdf_loaded'
+    }
 
 export type GenericMessageType = {
   [K in keyof ControlMessage]: ControlMessage[K]

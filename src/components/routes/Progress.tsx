@@ -19,7 +19,7 @@ export function Progress() {
   }, [localCounter])
 
   useEffect(() => {
-    if (progress.current >= progress.total) {
+    if (false) { // if (progress.current >= progress.total) {
       history.replace('/result')
     }
   }, [localCounter, progress])

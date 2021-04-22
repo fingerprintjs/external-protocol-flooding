@@ -2,12 +2,12 @@ import { ApplicationCandidate } from './types'
 
 export const applications: ApplicationCandidate[] = [
   {
-    title: 'Spotify',
-    scheme: 'spotify',
-  },
-  {
     title: 'Skype',
     scheme: 'skype',
+  },
+  {
+    title: 'Spotify',
+    scheme: 'spotify',
   },
   {
     title: 'Telegram',

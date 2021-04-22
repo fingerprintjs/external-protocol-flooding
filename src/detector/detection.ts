@@ -1,8 +1,18 @@
-import { getAdditionalWindow, invokeWithFrame, isPopupWindow, onMessage, sendWindowMessage } from './window'
+import {
+  getAdditionalWindow,
+  invokeWithFrame,
+  isPopupWindow,
+  listenOnce,
+  onMessage,
+  sendWindowMessage,
+  waitForEmbedElemet,
+  waitForLocation,
+} from './window'
 import { getBrowserFamily } from './browser'
 import { applications } from './const'
 import { BrowserFamily } from './types'
 import { wait } from './utils'
+import pdfLink from 'assets/blank.pdf'
 
 const CURRENT_APP_INDEX_KEY = '__currentAppIndex'
 const STATE_KEY = '__state'
@@ -42,6 +52,8 @@ export function saveDetectionResult(isDetected: boolean) {
   const state = getState()
   const current = getCurrentIndex()
 
+  console.log('save result', current, isDetected)
+
   state[current] = isDetected
 
   localStorage.setItem(STATE_KEY, JSON.stringify(state))
@@ -80,19 +92,32 @@ export async function detectChrome() {
 
   await invokeWithFrame('main', async () => {
     const handler = getAdditionalWindow()
+    let isDetected = false
+
+    function flushTrigger() {
+      handler.location.replace(pdfLink) // 'chrome-extension://mhjfbmdgcfjbbpaeojofohoefgiehjai/index.html') //
+    }
+
+    const unsubscribe = listenOnce('blur', () => {
+      saveDetectionResult((isDetected = true))
+      flushTrigger()
+    })
+
+    // Make test
     handler.location.replace(getCurrentApplicationUrl())
 
-    await wait(35)
+    await wait(50) // emperical
+    console.log(isDetected)
+    if (!isDetected) {
+      saveDetectionResult(false)
+      unsubscribe()
+      flushTrigger()
+    }
 
-    const isDetected = !handler.document.hasFocus()
-    saveDetectionResult(isDetected)
-    handler.location.replace('/pdf')
+    await waitForEmbedElemet()
 
-    await wait(350)
-
-    handler.location.replace('about:blank')
-
-    await wait(35)
+    handler.location.href = 'about:blank'
+    await wait(5) // emperical
   })
 
   return isPopupWindow() ? DetectionResult.Waiting : DetectionResult.Ready
@@ -129,12 +154,15 @@ export async function detectSafari() {
     document.location.replace(getCurrentApplicationUrl())
     sendWindowMessage('redirected')
 
-    await wait(200)
+    await wait(600)
     document.location.reload()
   })
 
   return DetectionResult.Waiting
 }
+
+const firefoxDetectionWaitingDefault = 200
+let firefoxDetectionWaiting = firefoxDetectionWaitingDefault
 
 export async function detectFirefox() {
   if (isDetectionCompleted()) {
@@ -146,21 +174,35 @@ export async function detectFirefox() {
 
   await invokeWithFrame('main', async () => {
     const handler = getAdditionalWindow()
-    handler.location.replace(getCurrentApplicationUrl())
+    const start = performance.now()
 
-    await wait(35)
-    window.focus()
+    const unsubscribe = listenOnce('load', () => {
+      const delta = performance.now() - start
 
-    const isDetected = !handler.document.hasFocus()
-    saveDetectionResult(isDetected)
+      if (firefoxDetectionWaiting === firefoxDetectionWaitingDefault) {
+        firefoxDetectionWaiting = delta + 15 // emperical
+      }
+    })
+
+    const iframe = document.createElement('iframe')
+    iframe.src = getCurrentApplicationUrl()
+    iframe.style.opacity = '0'
+    handler.document.body.appendChild(iframe)
+
+    await wait(firefoxDetectionWaiting)
+    unsubscribe()
+
+    if (iframe.contentDocument) {
+      saveDetectionResult(true)
+    } else {
+      saveDetectionResult(false)
+    }
 
     handler.location.replace('/blank')
-
-    await wait(200)
+    await waitForLocation(document.location.origin + '/blank')
 
     handler.location.replace('about:blank')
-
-    await wait(35)
+    await waitForLocation('about:blank')
   })
 
   return isPopupWindow() ? DetectionResult.Waiting : DetectionResult.Ready
