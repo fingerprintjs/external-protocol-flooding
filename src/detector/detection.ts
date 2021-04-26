@@ -91,6 +91,10 @@ export async function detectChrome() {
   }
 
   await invokeWithFrame('main', async () => {
+    if (getCurrentIndex() === 0) {
+      await wait(100)
+    }
+
     const handler = getAdditionalWindow()
     let isDetected = false
 
@@ -107,7 +111,7 @@ export async function detectChrome() {
     handler.location.replace(getCurrentApplicationUrl())
 
     await wait(50) // emperical
-    console.log(isDetected)
+
     if (!isDetected) {
       saveDetectionResult(false)
       unsubscribe()
@@ -115,6 +119,7 @@ export async function detectChrome() {
     }
 
     await waitForEmbedElemet()
+    await wait(200) // emperical
 
     handler.location.href = 'about:blank'
     await wait(5) // emperical
@@ -154,7 +159,7 @@ export async function detectSafari() {
     document.location.replace(getCurrentApplicationUrl())
     sendWindowMessage('redirected')
 
-    await wait(600)
+    await wait(200)
     document.location.reload()
   })
 
@@ -173,6 +178,10 @@ export async function detectFirefox() {
   }
 
   await invokeWithFrame('main', async () => {
+    if (getCurrentIndex() === 0) {
+      await wait(100)
+    }
+
     const handler = getAdditionalWindow()
     const start = performance.now()
 
@@ -208,6 +217,28 @@ export async function detectFirefox() {
   return isPopupWindow() ? DetectionResult.Waiting : DetectionResult.Ready
 }
 
+export async function detectTorBrowser() {
+  await invokeWithFrame('main', async () => {
+    const iframe = document.createElement('iframe')
+    iframe.src = getCurrentApplicationUrl()
+    iframe.style.opacity = '0'
+    document.body.appendChild(iframe)
+
+    await wait(50)
+
+    if (iframe.contentDocument) {
+      saveDetectionResult(true)
+    } else {
+      saveDetectionResult(false)
+    }
+
+    iframe.remove()
+    await wait(10 * 1000) // emperical
+  })
+
+  return DetectionResult.Ready
+}
+
 /**
  * Permforms checks and detects if the current app installed or not and saves result
  */
@@ -223,6 +254,9 @@ export async function detectNext(): Promise<number> {
 
     case BrowserFamily.Firefox:
       return detectFirefox()
+
+    case BrowserFamily.TorBrowser:
+      return detectTorBrowser()
 
     default:
       throw new Error()

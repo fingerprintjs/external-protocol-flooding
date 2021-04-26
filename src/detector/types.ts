@@ -2,6 +2,7 @@ export enum BrowserFamily {
   Safari,
   Chrome,
   Firefox,
+  TorBrowser,
   Unknown,
 }
 
@@ -11,6 +12,7 @@ export enum BrowserFamily {
 export type ApplicationCandidate = {
   title: string
   scheme: string
+  icon: string
 }
 
 /**

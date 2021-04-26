@@ -37,6 +37,11 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@cryptography/sha1@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@cryptography/sha1/-/sha1-0.2.0.tgz#7ba2ef0054c0510f583fadf791005bbe2571a258"
+  integrity sha512-qlMD9LvSs8fL3+coW3CP4xwLoeWxXTnuFuCiC5r/SEh6Od8YI28OjtAiMwAavw9I0d9Ow3Z9zHwgEEaMwJrFVw==
+
 "@discoveryjs/json-ext@^0.5.0":
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"
