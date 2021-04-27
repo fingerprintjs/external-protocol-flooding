@@ -1,0 +1,27 @@
+.container {
+  appearance: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px 16px 16px;
+  margin: 12px;
+
+  background: #ffffff;
+  border-radius: 32px;
+}
+
+.notDetected {
+  opacity: 0.48;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  margin-right: 10px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 18px;
+}

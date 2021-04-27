@@ -18,11 +18,6 @@ export const applications: ApplicationCandidate[] = [
     icon: require('assets/app-icons/zoom.svg').default,
   },
   {
-    title: 'iTunes',
-    scheme: 'itunes',
-    icon: require('assets/app-icons/itunes.svg').default,
-  },
-  {
     title: 'vscode',
     scheme: 'vscode',
     icon: require('assets/app-icons/vscode.svg').default,
@@ -117,5 +112,10 @@ export const applications: ApplicationCandidate[] = [
     title: 'postgres',
     scheme: 'postgres',
     icon: require('assets/app-icons/default.svg').default,
+  },
+  {
+    title: 'iTunes',
+    scheme: 'itunes',
+    icon: require('assets/app-icons/itunes.svg').default,
   },
 ]

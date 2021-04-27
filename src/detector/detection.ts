@@ -52,8 +52,6 @@ export function saveDetectionResult(isDetected: boolean) {
   const state = getState()
   const current = getCurrentIndex()
 
-  console.log('save result', current, isDetected)
-
   state[current] = isDetected
 
   localStorage.setItem(STATE_KEY, JSON.stringify(state))
@@ -92,37 +90,54 @@ export async function detectChrome() {
 
   await invokeWithFrame('main', async () => {
     if (getCurrentIndex() === 0) {
-      await wait(100)
+      await wait(250)
     }
+
+    const start = performance.now()
+    const delta = () => Math.round(performance.now() - start)
+
+    console.log(getCurrentApplicationUrl(), delta(), 'start')
 
     const handler = getAdditionalWindow()
     let isDetected = false
 
     function flushTrigger() {
+      console.log(getCurrentApplicationUrl(), delta(), 'flush trigger')
       handler.location.replace(pdfLink) // 'chrome-extension://mhjfbmdgcfjbbpaeojofohoefgiehjai/index.html') //
     }
 
     const unsubscribe = listenOnce('blur', () => {
+      console.log(getCurrentApplicationUrl(), delta(), 'on blur')
       saveDetectionResult((isDetected = true))
       flushTrigger()
     })
 
+    console.log(getCurrentApplicationUrl(), delta(), 'will replace scheme')
     // Make test
     handler.location.replace(getCurrentApplicationUrl())
 
+    console.log(getCurrentApplicationUrl(), delta(), 'will wait 50')
     await wait(50) // emperical
 
+    console.log(getCurrentApplicationUrl(), delta(), 'if isDetected', isDetected)
     if (!isDetected) {
       saveDetectionResult(false)
       unsubscribe()
       flushTrigger()
     }
 
+    console.log(getCurrentApplicationUrl(), delta(), 'will wait for embed', handler.location.href)
+
     await waitForEmbedElemet()
+    console.log(getCurrentApplicationUrl(), delta(), 'will wait 200', handler.location.href)
     await wait(200) // emperical
 
+    console.log(getCurrentApplicationUrl(), delta(), 'will about:blank', handler.location.href)
+
     handler.location.href = 'about:blank'
-    await wait(5) // emperical
+    await waitForLocation('about:blank')
+    console.log(getCurrentApplicationUrl(), delta(), 'will wait 10s', handler.location.href)
+    await wait(10) // emperical
   })
 
   return isPopupWindow() ? DetectionResult.Waiting : DetectionResult.Ready
@@ -143,6 +158,10 @@ export async function detectSafari() {
     } catch (e) {
       saveDetectionResult(false)
       handler.location.replace('/popup')
+    }
+
+    if (isDetectionCompleted()) {
+      location.replace('/result')
     }
   })
 
@@ -179,7 +198,7 @@ export async function detectFirefox() {
 
   await invokeWithFrame('main', async () => {
     if (getCurrentIndex() === 0) {
-      await wait(100)
+      await wait(300)
     }
 
     const handler = getAdditionalWindow()
@@ -224,7 +243,7 @@ export async function detectTorBrowser() {
     iframe.style.opacity = '0'
     document.body.appendChild(iframe)
 
-    await wait(50)
+    await wait(1000)
 
     if (iframe.contentDocument) {
       saveDetectionResult(true)

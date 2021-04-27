@@ -36,7 +36,7 @@ export function Progress() {
       <AppGrid>
       {progress.state.map((isDetected: boolean, index: number) => {
         const appData = applications[index]
-        return <App {...appData} isDetected={isDetected} />
+        return <App {...appData} key={appData.scheme} isDetected={isDetected} />
       })}
       </AppGrid>
       <Footer />
