@@ -4,15 +4,17 @@ import {
   isPopupWindow,
   listenOnce,
   onMessage,
+  resetVisibility,
   sendWindowMessage,
+  stopWatchVisibility,
   waitForEmbedElemet,
   waitForLocation,
+  watchVisibility,
 } from './window'
 import { getBrowserFamily } from './browser'
 import { applications } from './const'
 import { BrowserFamily } from './types'
 import { wait } from './utils'
-import pdfLink from 'assets/blank.pdf'
 
 const CURRENT_APP_INDEX_KEY = '__currentAppIndex'
 const STATE_KEY = '__state'
@@ -93,51 +95,47 @@ export async function detectChrome() {
       await wait(250)
     }
 
-    const start = performance.now()
-    const delta = () => Math.round(performance.now() - start)
-
-    console.log(getCurrentApplicationUrl(), delta(), 'start')
-
     const handler = getAdditionalWindow()
     let isDetected = false
+    let isBlurred = false
 
     function flushTrigger() {
-      console.log(getCurrentApplicationUrl(), delta(), 'flush trigger')
-      handler.location.replace(pdfLink) // 'chrome-extension://mhjfbmdgcfjbbpaeojofohoefgiehjai/index.html') //
+      handler.location.replace('/pdf')
+    }
+
+    window.onfocus = () => {
+      if (isBlurred) {
+        isDetected = false
+      }
     }
 
     const unsubscribe = listenOnce('blur', () => {
-      console.log(getCurrentApplicationUrl(), delta(), 'on blur')
-      saveDetectionResult((isDetected = true))
-      flushTrigger()
+      isDetected = true
+      isBlurred = true
     })
 
-    console.log(getCurrentApplicationUrl(), delta(), 'will replace scheme')
+    watchVisibility(() => {
+      isDetected = true
+    })
+
+    await wait(20) // emperical
+
     // Make test
     handler.location.replace(getCurrentApplicationUrl())
 
-    console.log(getCurrentApplicationUrl(), delta(), 'will wait 50')
-    await wait(50) // emperical
+    await wait(60) // emperical
+    stopWatchVisibility()
 
-    console.log(getCurrentApplicationUrl(), delta(), 'if isDetected', isDetected)
-    if (!isDetected) {
-      saveDetectionResult(false)
-      unsubscribe()
-      flushTrigger()
-    }
-
-    console.log(getCurrentApplicationUrl(), delta(), 'will wait for embed', handler.location.href)
+    saveDetectionResult(isDetected)
+    unsubscribe()
+    flushTrigger()
 
     await waitForEmbedElemet()
-    console.log(getCurrentApplicationUrl(), delta(), 'will wait 200', handler.location.href)
-    await wait(200) // emperical
-
-    console.log(getCurrentApplicationUrl(), delta(), 'will about:blank', handler.location.href)
+    await wait(25) // emperical
 
     handler.location.href = 'about:blank'
     await waitForLocation('about:blank')
-    console.log(getCurrentApplicationUrl(), delta(), 'will wait 10s', handler.location.href)
-    await wait(10) // emperical
+    resetVisibility()
   })
 
   return isPopupWindow() ? DetectionResult.Waiting : DetectionResult.Ready

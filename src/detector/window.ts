@@ -1,10 +1,13 @@
 import { getBrowserFamily } from './browser'
+import { getCurrentApplicationUrl } from './detection'
 import { BrowserFamily, GenericMessage, GenericMessageType } from './types'
 
 /**
  * Additinal window instance
  */
 let handler: Window | null = null
+let lastFrameTimestamp = 0
+let lastRequestFrameHandle = -1
 
 /**
  * Function will create a popup (is separeted from getAdditionalWindow because requires user gesture)
@@ -12,7 +15,14 @@ let handler: Window | null = null
  * Since we don't want to open multiple popups it has the memoization
  */
 export function createAdditionalWindow() {
-  const params = 'width=100,height=100,left=9999,top=9999'
+  const target = getBrowserFamily()
+  const size = 100
+  const left = screenLeft + (innerWidth - size * 2 - 20)
+  const top = screenTop + (innerHeight - size - 20)
+  const params =
+    target === BrowserFamily.Chrome
+      ? `width=${size},height=${size},left=${left},top=${top}`
+      : `width=${size},height=${size},left=9999,top=9999`
 
   handler = window.open(getInitialUrlForPopup(), '', params)
 
@@ -20,7 +30,41 @@ export function createAdditionalWindow() {
     throw new Error('Unable to open popup')
   }
 
+  watchVisibility()
+
   return handler
+}
+
+export function watchVisibility(onBecameVisible?: () => unknown) {
+  function handleFrame() {
+    const now = Date.now()
+
+    if (now - lastFrameTimestamp > 20 && onBecameVisible) {
+      console.log(getCurrentApplicationUrl(), now - lastFrameTimestamp)
+      onBecameVisible()
+    }
+
+    lastFrameTimestamp = now
+
+    if (handler) {
+      lastRequestFrameHandle = handler.window.requestAnimationFrame(handleFrame)
+    }
+  }
+
+  if (handler) {
+    lastRequestFrameHandle = handler.window.requestAnimationFrame(handleFrame)
+  }
+}
+
+export function stopWatchVisibility() {
+  if (handler && lastRequestFrameHandle !== -1) {
+    handler.window.cancelAnimationFrame(lastRequestFrameHandle)
+    lastRequestFrameHandle = -1
+  }
+}
+
+export function resetVisibility() {
+  lastFrameTimestamp = Date.now()
 }
 
 export function listenOnce(type: keyof WindowEventMap, callback: (event: Event) => unknown) {
@@ -115,7 +159,8 @@ export function getAdditionalWindow() {
 export function waitForEmbedElemet() {
   return new Promise<void>((resolve) => {
     const intervalId = setInterval(() => {
-      const embeds = handler?.document.embeds
+      const iframe = handler?.document.getElementsByTagName('iframe')[0]
+      const embeds = iframe?.contentDocument?.embeds
 
       if (embeds && embeds.length > 0) {
         clearInterval(intervalId)
