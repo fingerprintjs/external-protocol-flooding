@@ -4,6 +4,8 @@
   "repository": "git@github.com:spalt08/cross-browser-cookie.git",
   "author": "Konstantin Darutkin <kdarutkin@gmail.com>",
   "license": "MIT",
+  "private": true,
+  "workspaces": ["src/packages/backend"],
   "scripts": {
     "lint": "eslint . --ext .ts,.tsx,.js --quiet --fix",
     "start": "webpack serve",
