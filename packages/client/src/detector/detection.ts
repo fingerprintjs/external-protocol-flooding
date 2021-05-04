@@ -90,7 +90,7 @@ export async function detectChrome() {
 
   await invokeWithFrame('main', async () => {
     if (getCurrentIndex() === 0) {
-      await wait(250)
+      await wait(300)
     }
 
     const handler = getAdditionalWindow()
@@ -107,7 +107,7 @@ export async function detectChrome() {
       isDetected = false
     }
 
-    await wait(5) // emperical
+    await wait(30) // emperical
 
     // Make test
     if (document.hasFocus()) {
@@ -118,17 +118,18 @@ export async function detectChrome() {
 
     handler.location.replace(getCurrentApplicationUrl())
 
-    await wait(50) // emperical
+    await wait(75) // emperical
 
     input.focus()
-    await wait(2)
+    await wait(5)
     input.remove()
 
     saveDetectionResult(isDetected)
     flushTrigger()
 
     await waitForEmbedElemet()
-    await wait(50) // emperical
+    await wait(220) // emperical
+
     handler.location.href = 'about:blank'
     await waitForLocation('about:blank')
     resetVisibility()
