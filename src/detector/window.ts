@@ -15,15 +15,7 @@ let lastRequestFrameHandle = -1
  * Since we don't want to open multiple popups it has the memoization
  */
 export function createAdditionalWindow() {
-  const target = getBrowserFamily()
-  const size = 100
-  const left = screenLeft + (innerWidth - size * 2 - 20)
-  const top = screenTop + (innerHeight - size - 20)
-  const params =
-    target === BrowserFamily.Chrome
-      ? `width=${size},height=${size},left=${left},top=${top}`
-      : `width=${size},height=${size},left=9999,top=9999`
-
+  const params = `width=50,height=50,left=9999,top=9999`
   handler = window.open(getInitialUrlForPopup(), '', params)
 
   if (!handler) {
@@ -73,7 +65,7 @@ export function listenOnce(type: keyof WindowEventMap, callback: (event: Event) 
 }
 
 export function listenAll<T>(target: T) {
-  const keys = Object.keys(target)
+  const keys = Object.keys(window)
   const start = performance.now()
 
   for (const key of keys) {

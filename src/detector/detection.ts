@@ -6,10 +6,8 @@ import {
   onMessage,
   resetVisibility,
   sendWindowMessage,
-  stopWatchVisibility,
   waitForEmbedElemet,
   waitForLocation,
-  watchVisibility,
 } from './window'
 import { getBrowserFamily } from './browser'
 import { applications } from './const'
@@ -96,43 +94,41 @@ export async function detectChrome() {
     }
 
     const handler = getAdditionalWindow()
-    let isDetected = false
-    let isBlurred = false
+    let isDetected = true
 
     function flushTrigger() {
       handler.location.replace('/pdf')
     }
 
-    window.onfocus = () => {
-      if (isBlurred) {
-        isDetected = false
-      }
+    const input = document.createElement('input')
+    input.style.opacity = '0'
+    input.style.position = 'absolute'
+    input.onfocus = () => {
+      isDetected = false
     }
 
-    const unsubscribe = listenOnce('blur', () => {
-      isDetected = true
-      isBlurred = true
-    })
-
-    watchVisibility(() => {
-      isDetected = true
-    })
-
-    await wait(20) // emperical
+    await wait(5) // emperical
 
     // Make test
+    if (document.hasFocus()) {
+      document.body.insertBefore(input, document.getElementById('app'))
+    } else {
+      handler.document.body.appendChild(input)
+    }
+
     handler.location.replace(getCurrentApplicationUrl())
 
-    await wait(60) // emperical
-    stopWatchVisibility()
+    await wait(50) // emperical
+
+    input.focus()
+    await wait(2)
+    input.remove()
 
     saveDetectionResult(isDetected)
-    unsubscribe()
     flushTrigger()
 
     await waitForEmbedElemet()
-    await wait(25) // emperical
-
+    await wait(50) // emperical
     handler.location.href = 'about:blank'
     await waitForLocation('about:blank')
     resetVisibility()
