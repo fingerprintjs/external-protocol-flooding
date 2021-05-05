@@ -1,13 +1,10 @@
 import { getBrowserFamily } from './browser'
-import { getCurrentApplicationUrl } from './detection'
 import { BrowserFamily, GenericMessage, GenericMessageType } from './types'
 
 /**
  * Additinal window instance
  */
 let handler: Window | null = null
-let lastFrameTimestamp = 0
-let lastRequestFrameHandle = -1
 
 /**
  * Function will create a popup (is separeted from getAdditionalWindow because requires user gesture)
@@ -22,41 +19,7 @@ export function createAdditionalWindow() {
     throw new Error('Unable to open popup')
   }
 
-  watchVisibility()
-
   return handler
-}
-
-export function watchVisibility(onBecameVisible?: () => unknown) {
-  function handleFrame() {
-    const now = Date.now()
-
-    if (now - lastFrameTimestamp > 20 && onBecameVisible) {
-      console.log(getCurrentApplicationUrl(), now - lastFrameTimestamp)
-      onBecameVisible()
-    }
-
-    lastFrameTimestamp = now
-
-    if (handler) {
-      lastRequestFrameHandle = handler.window.requestAnimationFrame(handleFrame)
-    }
-  }
-
-  if (handler) {
-    lastRequestFrameHandle = handler.window.requestAnimationFrame(handleFrame)
-  }
-}
-
-export function stopWatchVisibility() {
-  if (handler && lastRequestFrameHandle !== -1) {
-    handler.window.cancelAnimationFrame(lastRequestFrameHandle)
-    lastRequestFrameHandle = -1
-  }
-}
-
-export function resetVisibility() {
-  lastFrameTimestamp = Date.now()
 }
 
 export function listenOnce(type: keyof WindowEventMap, callback: (event: Event) => unknown) {
@@ -64,12 +27,16 @@ export function listenOnce(type: keyof WindowEventMap, callback: (event: Event) 
   return () => handler?.removeEventListener(type, callback)
 }
 
-export function listenAll<T>(target: T) {
+/**
+ * For dev debugging only
+ */
+export function debugEvents<T>(target: T) {
   const keys = Object.keys(window)
   const start = performance.now()
 
   for (const key of keys) {
     if (key.slice(0, 2) === 'on') {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       target[key] = (e: unknown) => console.log(performance.now() - start, handler?.location.href, e)
     }
@@ -101,6 +68,9 @@ export async function invokeWithFrame(type: 'main' | 'popup', callback: () => un
   }
 }
 
+/**
+ * Used for duplex cross-window communtication
+ */
 export function sendWindowMessage(type: GenericMessageType) {
   const targetWindow: Window = window.opener || handler
 
@@ -113,6 +83,9 @@ export function sendWindowMessage(type: GenericMessageType) {
   )
 }
 
+/**
+ * Also used for duplex cross-window communtication
+ */
 const messageListeners: Record<string, () => unknown> = {}
 export function onMessage(type: GenericMessageType, callback: () => unknown) {
   messageListeners[type] = callback

@@ -8,5 +8,9 @@
   max-width: 680px;
   margin: 0 auto;
   text-align: center;
-  padding: 60px;
+  padding: 60px 60px 0;
+}
+
+.container:last-child {
+  padding-bottom: 60px;
 }

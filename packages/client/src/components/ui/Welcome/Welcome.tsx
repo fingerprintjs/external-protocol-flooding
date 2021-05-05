@@ -1,14 +1,16 @@
 import React, { useCallback } from 'react'
-import { useHistory } from 'react-router-dom'
 import { initDetection } from 'detector/hooks'
 import { Footer, Centered, BrowserIcons, Logo } from 'components/ui'
 
-export function Welcome() {
-  const history = useHistory()
+type Props = {
+  onStart: () => unknown
+}
+
+export function Welcome({ onStart }: Props) {
   const handleStart = useCallback(() => {
     initDetection()
-    history.push('/progress')
-  }, [history])
+    onStart()
+  }, [])
 
   return (
     <>
@@ -21,8 +23,8 @@ export function Welcome() {
         </h4>
         <BrowserIcons />
         <button onClick={handleStart}>Get My Identifier</button>
+        <Footer />
       </Centered>
-      <Footer />
     </>
   )
 }

@@ -4,7 +4,6 @@ import {
   isPopupWindow,
   listenOnce,
   onMessage,
-  resetVisibility,
   sendWindowMessage,
   waitForEmbedElemet,
   waitForLocation,
@@ -16,6 +15,13 @@ import { wait } from './utils'
 
 const CURRENT_APP_INDEX_KEY = '__currentAppIndex'
 const STATE_KEY = '__state'
+const APP_STATE_KEY = '__app_state'
+
+export enum ApplicationState {
+  Ready = 'ready',
+  InProgress = 'in-progress',
+  Welcome = 'welcome',
+}
 
 export enum DetectionResult {
   Waiting,
@@ -25,7 +31,7 @@ export enum DetectionResult {
 /**
  * State is a current completed or in-progress result of the installed apps detection process
  */
-export function getState() {
+export function getState(): boolean[] {
   return JSON.parse(localStorage.getItem(STATE_KEY) || '[]')
 }
 
@@ -82,6 +88,8 @@ export function getCurrentApplicationUrl() {
 
 export async function detectChrome() {
   if (isDetectionCompleted()) {
+    setInternalApplicationState(ApplicationState.Ready)
+
     const handler = getAdditionalWindow()
     handler.close()
 
@@ -132,7 +140,6 @@ export async function detectChrome() {
 
     handler.location.href = 'about:blank'
     await waitForLocation('about:blank')
-    resetVisibility()
   })
 
   return isPopupWindow() ? DetectionResult.Waiting : DetectionResult.Ready
@@ -149,6 +156,8 @@ export async function detectSafari() {
 
       saveDetectionResult(true)
       sendWindowMessage('force_reload')
+
+      setInternalApplicationState(ApplicationState.InProgress)
       document.location.reload()
     } catch (e) {
       saveDetectionResult(false)
@@ -156,7 +165,8 @@ export async function detectSafari() {
     }
 
     if (isDetectionCompleted()) {
-      location.replace('/result')
+      setInternalApplicationState(ApplicationState.Ready)
+      document.location.reload()
     }
   })
 
@@ -185,6 +195,8 @@ let firefoxDetectionWaiting = firefoxDetectionWaitingDefault
 
 export async function detectFirefox() {
   if (isDetectionCompleted()) {
+    setInternalApplicationState(ApplicationState.Ready)
+
     const handler = getAdditionalWindow()
     handler.close()
 
@@ -275,4 +287,13 @@ export async function detectNext(): Promise<number> {
     default:
       throw new Error()
   }
+}
+
+export function setInternalApplicationState(state: ApplicationState) {
+  localStorage.setItem(APP_STATE_KEY, state)
+}
+
+export function getInternalApplicationState(): ApplicationState {
+  const cachedState = (localStorage.getItem(APP_STATE_KEY) as ApplicationState) || undefined
+  return cachedState || ApplicationState.Welcome
 }

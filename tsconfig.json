@@ -12,6 +12,6 @@
     "noErrorTruncation": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
-    "baseUrl": "src/"
+    "baseUrl": "packages/client/src"
   }
 }

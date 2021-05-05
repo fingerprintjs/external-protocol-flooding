@@ -9,13 +9,6 @@
   line-height: 24px;
 }
 
-.link {
-  color: #332550;
-  display: inline-block;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(137, 137, 158, 0.24);
-}
-
 .bull::before {
   content: '•';
   color: rgb(137, 137, 158, 0.48);

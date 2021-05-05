@@ -1,12 +1,15 @@
 import React from 'react'
 import sha1 from '@cryptography/sha1'
 import { useDetectionProgress } from 'detector/hooks'
-import { App, AppGrid, BrowserIcons, Centered, Footer, Hr, Logo } from 'components/ui'
-import { applications } from 'detector/const'
+import { AppGrid, BrowserIcons, Centered, Footer, Hr, Logo } from 'components/ui'
 
-export function Result() {
+type Props = {
+  onRestart: () => unknown
+}
+
+export function Result({ onRestart }: Props) {
   const progress = useDetectionProgress()
-  const idenifier = sha1(progress.state.map((item: boolean) => +item).toString().replaceAll(',', ''), 'hex').slice(0, 16)
+  const idenifier = sha1(progress.state.map((item: boolean) => +item).toString().replace(/,/g, ''), 'hex').slice(0, 16)
 
   return (
     <>
@@ -14,6 +17,7 @@ export function Result() {
         <Logo />
         <p>Your 99,5% accurate personal ID is...</p>
         <h1>{idenifier}</h1>
+        <a onClick={onRestart}>Want to try again?</a>
 
         <Hr/>
       
@@ -24,12 +28,7 @@ export function Result() {
         <Hr/>
 
       </Centered>
-      <AppGrid>
-        {progress.state.map((isDetected: boolean, index: number) => {
-          const appData = applications[index]
-          return <App {...appData} key={appData.scheme} isDetected={isDetected} />
-        })}
-      </AppGrid>
+      <AppGrid layout='full' />
       <Footer />
     </>
   )

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import { useDetectionProgress } from 'detector/hooks'
-import { applications } from 'detector/const'
 import { detectNext, DetectionResult } from 'detector/detection'
-import { App, AppGrid, Centered, Footer, Logo, ProgressBar } from 'components/ui'
+import { AppGrid, Centered, Footer, Logo, ProgressBar } from 'components/ui'
 
-export function Progress() {
+type Props = {
+  onComplete: () => unknown
+}
+
+export function InProgress({ onComplete }: Props) {
   const [localCounter, setLocalCounter] = useState(0)
   const progress = useDetectionProgress()
-  const history = useHistory()
 
   useEffect(() => {
     detectNext().then((result) => {
@@ -20,7 +21,7 @@ export function Progress() {
 
   useEffect(() => {
     if (progress.current >= progress.total) {
-      history.replace('/result')
+      onComplete()
     }
   }, [localCounter, progress])
 
@@ -33,12 +34,7 @@ export function Progress() {
         <ProgressBar total={progress.total} current={progress.current} />
       
       </Centered>
-      <AppGrid>
-      {progress.state.map((isDetected: boolean, index: number) => {
-        const appData = applications[index]
-        return <App {...appData} key={appData.scheme} isDetected={isDetected} />
-      })}
-      </AppGrid>
+      <AppGrid layout='short' />
       <Footer />
     </>
   )

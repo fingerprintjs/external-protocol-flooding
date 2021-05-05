@@ -5,5 +5,12 @@
   align-items: center;
   appearance: none;
   padding: 0 160px;
-  margin: -80px 0 80px;
+  margin: 40px 0 40px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
