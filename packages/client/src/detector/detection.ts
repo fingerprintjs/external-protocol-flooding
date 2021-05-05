@@ -21,11 +21,18 @@ export enum ApplicationState {
   Ready = 'ready',
   InProgress = 'in-progress',
   Welcome = 'welcome',
+  Alerted = 'alerted',
 }
 
 export enum DetectionResult {
   Waiting,
   Ready,
+}
+
+export enum AlertMessage {
+  FocusWindow = 'Please keep the browser window focused.',
+  MissingPopup = 'Please keep the popup opened and do not close it.',
+  Unexpected = 'Unexpected Error happened',
 }
 
 /**
@@ -62,6 +69,15 @@ export function saveDetectionResult(isDetected: boolean) {
 
   localStorage.setItem(STATE_KEY, JSON.stringify(state))
   localStorage.setItem(CURRENT_APP_INDEX_KEY, JSON.stringify(current + 1))
+}
+
+/**
+ * Reverts last result
+ */
+export function revertLatestResult() {
+  const current = getCurrentIndex()
+
+  localStorage.setItem(CURRENT_APP_INDEX_KEY, JSON.stringify(Math.max(0, current - 1)))
 }
 
 /**
@@ -117,6 +133,11 @@ export async function detectChrome() {
 
     await wait(30) // emperical
 
+    const isBrowserActive = document.hasFocus() || handler.document.hasFocus()
+    if (!isBrowserActive) {
+      throw AlertMessage.FocusWindow
+    }
+
     // Make test
     if (document.hasFocus()) {
       document.body.insertBefore(input, document.getElementById('app'))
@@ -139,6 +160,7 @@ export async function detectChrome() {
     await wait(220) // emperical
 
     handler.location.href = 'about:blank'
+
     await waitForLocation('about:blank')
   })
 

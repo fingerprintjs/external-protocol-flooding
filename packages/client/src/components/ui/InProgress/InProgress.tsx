@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { useDetectionProgress } from 'detector/hooks'
-import { detectNext, DetectionResult } from 'detector/detection'
+import { detectNext, DetectionResult, AlertMessage } from 'detector/detection'
+import { isAdditinalWindowOpened } from 'detector/window'
 import { AppGrid, Centered, Footer, Logo, ProgressBar } from 'components/ui'
 
 type Props = {
   onComplete: () => unknown
+  onAlert: (message: AlertMessage) => unknown
 }
 
-export function InProgress({ onComplete }: Props) {
+export function InProgress({ onAlert, onComplete }: Props) {
   const [localCounter, setLocalCounter] = useState(0)
   const progress = useDetectionProgress()
 
   useEffect(() => {
-    detectNext().then((result) => {
-      if (result === DetectionResult.Ready) {
-        setLocalCounter(localCounter + 1)
-      }
-    })
+    detectNext()
+      .then((result) => {
+        if (result === DetectionResult.Ready) {
+          setLocalCounter(localCounter + 1)
+        }
+      })
+      .catch((message: AlertMessage | Error) => {
+        onAlert(message instanceof Error ? AlertMessage.Unexpected : message)
+      })
   }, [localCounter])
 
   useEffect(() => {
@@ -24,6 +30,16 @@ export function InProgress({ onComplete }: Props) {
       onComplete()
     }
   }, [localCounter, progress])
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (!isAdditinalWindowOpened()) {
+        onAlert(AlertMessage.MissingPopup)
+      }
+    }, 200)
+
+    return (() => clearInterval(intervalId))
+  }, [])
 
   return (
     <>

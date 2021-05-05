@@ -1,4 +1,5 @@
 import { getBrowserFamily } from './browser'
+import { AlertMessage } from './detection'
 import { BrowserFamily, GenericMessage, GenericMessageType } from './types'
 
 /**
@@ -16,7 +17,7 @@ export function createAdditionalWindow() {
   handler = window.open(getInitialUrlForPopup(), '', params)
 
   if (!handler) {
-    throw new Error('Unable to open popup')
+    throw AlertMessage.Unexpected
   }
 
   return handler
@@ -114,8 +115,23 @@ export function initWindowMessaging() {
 /**
  * Returns additional popup window instance
  */
-export function getAdditionalWindow() {
+export function getAdditionalWindow(silent = false) {
+  if (!silent && !isAdditinalWindowOpened()) {
+    throw AlertMessage.MissingPopup
+  }
+
   return handler || createAdditionalWindow()
+}
+
+/**
+ * Checks if popup wasn't closed
+ */
+export function isAdditinalWindowOpened() {
+  if (getBrowserFamily() === BrowserFamily.TorBrowser) {
+    return true
+  }
+
+  return handler && !handler.closed
 }
 
 /**
