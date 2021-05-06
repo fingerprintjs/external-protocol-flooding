@@ -116,7 +116,7 @@ export function initWindowMessaging() {
  * Returns additional popup window instance
  */
 export function getAdditionalWindow(silent = false) {
-  if (!silent && !isAdditinalWindowOpened()) {
+  if (!silent && !isAdditinalWindowOpened() && !isPopupWindow()) {
     throw AlertMessage.MissingPopup
   }
 

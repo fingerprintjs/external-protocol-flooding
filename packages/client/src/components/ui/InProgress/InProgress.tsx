@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDetectionProgress } from 'detector/hooks'
 import { detectNext, DetectionResult, AlertMessage } from 'detector/detection'
-import { isAdditinalWindowOpened } from 'detector/window'
+// import { isAdditinalWindowOpened } from 'detector/window'
 import { AppGrid, Centered, Footer, Logo, ProgressBar } from 'components/ui'
 
 type Props = {
@@ -31,15 +31,15 @@ export function InProgress({ onAlert, onComplete }: Props) {
     }
   }, [localCounter, progress])
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (!isAdditinalWindowOpened()) {
-        onAlert(AlertMessage.MissingPopup)
-      }
-    }, 200)
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     if (!isAdditinalWindowOpened()) {
+  //       onAlert(AlertMessage.MissingPopup)
+  //     }
+  //   }, 200)
 
-    return (() => clearInterval(intervalId))
-  }, [])
+  //   return (() => clearInterval(intervalId))
+  // }, [])
 
   return (
     <>

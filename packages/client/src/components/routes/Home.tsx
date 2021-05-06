@@ -15,7 +15,13 @@ export function Home() {
       return <Result onRestart={() => setState(ApplicationState.Welcome)} />
 
     case ApplicationState.Alerted:
-      return <Alert text={alertMessage} onResume={() => setState(ApplicationState.InProgress)} />
+      return (
+        <Alert
+          text={alertMessage}
+          onResume={() => setState(ApplicationState.InProgress)}
+          onCancel={() => setState(ApplicationState.Welcome)}
+        />
+      )
 
     case ApplicationState.InProgress:
       return (

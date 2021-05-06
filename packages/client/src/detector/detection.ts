@@ -32,7 +32,7 @@ export enum DetectionResult {
 export enum AlertMessage {
   FocusWindow = 'Please keep the browser window focused.',
   MissingPopup = 'Please keep the popup opened and do not close it.',
-  Unexpected = 'Unexpected Error happened',
+  Unexpected = 'Unexpected error happened',
 }
 
 /**
@@ -48,7 +48,11 @@ export function getState(): boolean[] {
  * length - finished state, no app
  */
 export function getCurrentIndex() {
-  return Number(localStorage.getItem(CURRENT_APP_INDEX_KEY))
+  if (window.opener && getBrowserFamily() === BrowserFamily.Safari) {
+    return Number(window.opener.localStorage.getItem(CURRENT_APP_INDEX_KEY))
+  } else {
+    return Number(localStorage.getItem(CURRENT_APP_INDEX_KEY))
+  }
 }
 
 /**
@@ -64,6 +68,8 @@ export function getLength() {
 export function saveDetectionResult(isDetected: boolean) {
   const state = getState()
   const current = getCurrentIndex()
+
+  console.log('saving', isDetected, getCurrentApplicationUrl())
 
   state[current] = isDetected
 
@@ -166,7 +172,6 @@ export async function detectChrome() {
 
   return isPopupWindow() ? DetectionResult.Waiting : DetectionResult.Ready
 }
-
 export async function detectSafari() {
   onMessage('redirected', async () => {
     await wait(30)
