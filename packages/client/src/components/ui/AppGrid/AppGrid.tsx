@@ -15,12 +15,15 @@ export function AppGrid({ layout }: Props) {
   for (let i = 0; i < state.length; i++) {
     const isDetected = state[i]
     const appData = applications[i]
-    const component =  <App {...appData} key={appData.scheme} isDetected={isDetected} />
-    
-    if (isDetected) {
-      detectedApps.push(component)
-    } else {
-      notDetectedApps.push(component)
+
+    if (appData) {
+      const component =  <App {...appData} key={appData.scheme} isDetected={isDetected} />
+      
+      if (isDetected) {
+        detectedApps.push(component)
+      } else {
+        notDetectedApps.push(component)
+      }
     }
   }
 

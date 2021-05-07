@@ -97,8 +97,10 @@ module.exports = (env, argv) => {
     optimization: {
       minimizer: [
         new TerserPlugin({
-          extractComments: false,
+          extractComments: true,
           terserOptions: {
+            sourceMap: false,
+            compress: true,
             output: {
               comments: false,
             },

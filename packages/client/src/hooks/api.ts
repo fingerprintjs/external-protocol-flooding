@@ -16,6 +16,7 @@ export function useIdentifier() {
 
   if (isDetectionCompleted()) {
     const bitstring = progress.state
+      .slice(0, applications.length) // to do: fix slicing
       .map((item: boolean) => +item)
       .toString()
       .replace(/,/g, '')

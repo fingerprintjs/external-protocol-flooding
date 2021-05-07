@@ -65,9 +65,8 @@ export function getLength() {
 /**
  * Saves the flag if the current application installed or not
  */
-export function saveDetectionResult(isDetected: boolean) {
+export function saveDetectionResult(isDetected: boolean, current = getCurrentIndex()) {
   const state = getState()
-  const current = getCurrentIndex()
 
   console.log('saving', isDetected, getCurrentApplicationUrl())
 
@@ -103,8 +102,8 @@ export function isDetectionCompleted() {
 /**
  * Returns the URL with the current application scheme
  */
-export function getCurrentApplicationUrl() {
-  return `${applications[getCurrentIndex()]?.scheme}://test`
+export function getCurrentApplicationUrl(index = getCurrentIndex()) {
+  return `${applications[index]?.scheme}://test`
 }
 
 export async function detectChrome() {
@@ -269,26 +268,46 @@ export async function detectFirefox() {
   return isPopupWindow() ? DetectionResult.Waiting : DetectionResult.Ready
 }
 
-export async function detectTorBrowser() {
-  await invokeWithFrame('main', async () => {
-    const iframe = document.createElement('iframe')
-    iframe.src = getCurrentApplicationUrl()
-    iframe.style.opacity = '0'
-    document.body.appendChild(iframe)
+// export async function detectTorBrowser() {
+//   await invokeWithFrame('main', async () => {
+//     const iframe = document.createElement('iframe')
+//     iframe.src = getCurrentApplicationUrl()
+//     iframe.style.opacity = '0'
+//     document.body.appendChild(iframe)
 
-    await wait(1000)
+//     await wait(1000)
 
+//     if (iframe.contentDocument) {
+//       saveDetectionResult(true)
+//     } else {
+//       saveDetectionResult(false)
+//     }
+
+//     iframe.remove()
+//     await wait(10 * 1000) // emperical
+//   })
+
+//   return DetectionResult.Ready
+// }
+
+let currentAppIndexForTorBrowser = 0
+export async function detectTorBrowserInline(onComplete: (index: number) => unknown) {
+  const currentIndex = currentAppIndexForTorBrowser++
+  const iframe = document.createElement('iframe')
+  iframe.src = getCurrentApplicationUrl(currentIndex)
+  iframe.style.display = 'none'
+  document.body.appendChild(iframe)
+
+  setTimeout(() => {
     if (iframe.contentDocument) {
-      saveDetectionResult(true)
+      saveDetectionResult(true, currentIndex)
     } else {
-      saveDetectionResult(false)
+      saveDetectionResult(false, currentIndex)
     }
 
     iframe.remove()
-    await wait(10 * 1000) // emperical
-  })
-
-  return DetectionResult.Ready
+    onComplete(currentIndex)
+  }, 500)
 }
 
 /**
@@ -307,8 +326,8 @@ export async function detectNext(): Promise<number> {
     case BrowserFamily.Firefox:
       return detectFirefox()
 
-    case BrowserFamily.TorBrowser:
-      return detectTorBrowser()
+    // case BrowserFamily.TorBrowser:
+    //   return detectTorBrowser()
 
     default:
       throw new Error()
