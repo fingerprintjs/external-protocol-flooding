@@ -28,7 +28,8 @@ export function Alert({ text, onResume, onCancel }: Props) {
         <h4>{text}</h4>
         <Hr />
         <button onClick={handleResume}>Continue</button>
-        <button onClick={onCancel}>Start again</button>
+        <br/>
+        <a onClick={onCancel}>Start over</a>
         <Footer />
       </Centered>
     </>

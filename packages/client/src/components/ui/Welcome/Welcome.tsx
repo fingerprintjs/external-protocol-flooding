@@ -16,10 +16,10 @@ export function Welcome({ onStart }: Props) {
     <>
       <Centered>
         <Logo />
-        <h1>Cross-Browser <br/> Cookie</h1>
+        <h1>External Protocol Flooding Vulnerability</h1>
         <h4>
-          World's first fast and reliable desktop cross-browser tracking vulnerability!
-          Works with the Firefox, Chrome, Safari and even Tor browsers!
+          Allows anyone to perform reliable cross-border tracking. 
+          It works on desktop Chrome, Safari, Firefox and even Tor.
         </h4>
         <BrowserIcons />
         <button onClick={handleStart}>Get My Identifier</button>
