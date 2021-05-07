@@ -7,9 +7,10 @@ import { revertLatestResult } from 'detector/detection'
 type Props = {
   text: string
   onResume: () => unknown
+  onCancel: () => unknown
 }
 
-export function Alert({ text, onResume }: Props) {
+export function Alert({ text, onResume, onCancel }: Props) {
   const handleResume = useCallback(() => {
     revertLatestResult()
   
@@ -27,6 +28,7 @@ export function Alert({ text, onResume }: Props) {
         <h4>{text}</h4>
         <Hr />
         <button onClick={handleResume}>Continue</button>
+        <button onClick={onCancel}>Start again</button>
         <Footer />
       </Centered>
     </>

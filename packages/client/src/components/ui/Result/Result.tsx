@@ -1,22 +1,27 @@
 import React from 'react'
-import sha1 from '@cryptography/sha1'
-import { useDetectionProgress } from 'detector/hooks'
 import { AppGrid, BrowserIcons, Centered, Footer, Hr, Logo } from 'components/ui'
+import { useStatistics, useIdentifier } from 'hooks/api'
 
 type Props = {
   onRestart: () => unknown
 }
 
 export function Result({ onRestart }: Props) {
-  const progress = useDetectionProgress()
-  const idenifier = sha1(progress.state.map((item: boolean) => +item).toString().replace(/,/g, ''), 'hex').slice(0, 16)
+  const { stats, isLoading } = useStatistics()
+  const idenifier = useIdentifier()
 
   return (
     <>
       <Centered>
         <Logo />
-        <p>Your 99,5% accurate personal ID is...</p>
+        <p>Your cross-browser identifier is...</p>
         <h1>{idenifier}</h1>
+        { isLoading ? (
+          <p>Loading statistics data...</p>
+        ) : (
+          <p>This idenifier was seen {stats.count} times ({(stats.count/stats.total*100).toFixed(2)}%) from {stats.total} total</p>
+        )}
+
         <a onClick={onRestart}>Want to try again?</a>
 
         <Hr/>
