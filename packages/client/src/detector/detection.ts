@@ -90,8 +90,7 @@ export function revertLatestResult() {
  * Resets the whole detection alog
  */
 export function clearState() {
-  localStorage.removeItem(STATE_KEY)
-  localStorage.removeItem(CURRENT_APP_INDEX_KEY)
+  localStorage.clear()
 }
 
 /**
