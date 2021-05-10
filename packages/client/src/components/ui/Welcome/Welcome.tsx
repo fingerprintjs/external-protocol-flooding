@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { initDetection } from 'detector/hooks'
 import { Footer, Centered, BrowserIcons, Logo } from 'components/ui'
+import { TermsAccept } from '../TermsAccept/TermsAccept'
 
 type Props = {
   onStart: () => unknown
@@ -23,6 +24,7 @@ export function Welcome({ onStart }: Props) {
         </h4>
         <BrowserIcons />
         <button onClick={handleStart}>Get My Identifier</button>
+        <TermsAccept />
         <Footer />
       </Centered>
     </>

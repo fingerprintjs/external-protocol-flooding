@@ -11,6 +11,7 @@ export default function App() {
       <Route path='/pdf' component={routes.Pdf} />
       <Route path='/blank' component={routes.Blank} />
       <Route path='/popup' component={routes.Popup} />
+      <Route path='/terms' component={routes.Terms} />
       <Route path='/' component={routes.Home} />
     </Switch>
   )

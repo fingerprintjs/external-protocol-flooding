@@ -9,6 +9,7 @@ type Props = {
 export function Result({ onRestart }: Props) {
   const { stats, isLoading } = useStatistics()
   const idenifier = useIdentifier()
+  const percent = (100 - stats.count/stats.total*100).toFixed(2)
 
   return (
     <>
@@ -19,7 +20,14 @@ export function Result({ onRestart }: Props) {
         { isLoading ? (
           <p>Loading statistics data...</p>
         ) : (
-          <p>This idenifier was seen {stats.count} times ({(stats.count/stats.total*100).toFixed(2)}%) from {stats.total} total</p>
+          stats.count <= 2 ? (
+            <p>Your identifier is unique among <b>{stats.total}</b> users we checked so far!</p>
+          ) : (
+            <p>
+              Your identifier was seen <b>{stats.count}</b> times among <b>{stats.total}</b> users we checked so far. <br/>
+              That means it is <b>{percent}%</b> unique!
+            </p>
+          )
         )}
 
         <a onClick={onRestart}>Want to try again?</a>
@@ -27,7 +35,10 @@ export function Result({ onRestart }: Props) {
         <Hr/>
       
         <h4>Verify this in other browsers!</h4>
-        <p>This is your unique personal ID based on your fingerprint. Feel free to check if we can reveal you in other browsers including Tor!</p>
+        <p>
+          This is your unique ID based on the applications that you have installed. <br />
+          You can also try it in other browsers, including Tor Browsers!
+        </p>
         <BrowserIcons />
 
         <Hr/>

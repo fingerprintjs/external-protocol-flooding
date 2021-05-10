@@ -78,17 +78,7 @@ export const applications: ApplicationCandidate[] = [
     icon: require('assets/app-icons/word.svg').default,
   },
   {
-    title: 'Microsoft Excel',
-    scheme: 'excel',
-    icon: require('assets/app-icons/excel.svg').default,
-  },
-  {
-    title: 'Microsoft Edge',
-    scheme: 'microsoft-edge',
-    icon: require('assets/app-icons/edge.svg').default,
-  },
-  {
-    title: 'whatsapp',
+    title: 'WhatsApp',
     scheme: 'whatsapp',
     icon: require('assets/app-icons/whatsapp.svg').default,
   },
@@ -96,22 +86,32 @@ export const applications: ApplicationCandidate[] = [
   {
     title: 'Postman',
     scheme: 'postman',
-    icon: require('assets/app-icons/default.svg').default,
+    icon: require('assets/app-icons/postman.svg').default,
   },
   {
-    title: 'JetBrains',
-    scheme: 'idea',
-    icon: require('assets/app-icons/default.svg').default,
+    title: 'Torrent',
+    scheme: 'magnet',
+    icon: require('assets/app-icons/torrent.svg').default,
   },
   {
-    title: 'mysql',
-    scheme: 'mysql',
-    icon: require('assets/app-icons/default.svg').default,
+    title: 'Messenger',
+    scheme: 'messenger',
+    icon: require('assets/app-icons/messenger.svg').default,
   },
   {
-    title: 'postgres',
-    scheme: 'postgres',
-    icon: require('assets/app-icons/default.svg').default,
+    title: 'Figma',
+    scheme: 'figma',
+    icon: require('assets/app-icons/figma.svg').default,
+  },
+  {
+    title: 'Hotspot Shield',
+    scheme: 'hotspotshield',
+    icon: require('assets/app-icons/hotspotshield.png').default,
+  },
+  {
+    title: 'ExpressVPN',
+    scheme: 'expressvpn',
+    icon: require('assets/app-icons/expressvpn.svg').default,
   },
   {
     title: 'iTunes',
