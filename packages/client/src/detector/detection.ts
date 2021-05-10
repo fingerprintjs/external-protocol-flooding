@@ -135,7 +135,7 @@ export async function detectChrome() {
       isDetected = false
     }
 
-    await wait(30) // emperical
+    await wait(40) // emperical
 
     const isBrowserActive = document.hasFocus() || handler.document.hasFocus()
     if (!isBrowserActive) {
@@ -151,17 +151,17 @@ export async function detectChrome() {
 
     handler.location.replace(getCurrentApplicationUrl())
 
-    await wait(75) // emperical
+    await wait(90) // emperical
 
     input.focus()
-    await wait(5)
+    await wait(10)
     input.remove()
 
     saveDetectionResult(isDetected)
     flushTrigger()
 
     await waitForEmbedElemet()
-    await wait(220) // emperical
+    await wait(250) // emperical
 
     handler.location.href = 'about:blank'
 
