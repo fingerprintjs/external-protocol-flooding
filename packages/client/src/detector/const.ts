@@ -114,6 +114,11 @@ export const applications: ApplicationCandidate[] = [
     icon: require('assets/app-icons/expressvpn.svg').default,
   },
   {
+    title: 'Notion',
+    scheme: 'notion',
+    icon: require('assets/app-icons/notion.png').default,
+  },
+  {
     title: 'iTunes',
     scheme: 'itunes',
     icon: require('assets/app-icons/itunes.svg').default,

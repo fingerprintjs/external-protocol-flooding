@@ -21,10 +21,10 @@ export function Result({ onRestart }: Props) {
           <p>Loading statistics data...</p>
         ) : (
           stats.count <= 2 ? (
-            <p>Your identifier is unique among <b>{stats.total}</b> users we checked so far!</p>
+            <p>Your identifier is unique among <b>{stats.total}</b> tests so far!</p>
           ) : (
             <p>
-              Your identifier was seen <b>{stats.count}</b> times among <b>{stats.total}</b> users we checked so far. <br/>
+              Your identifier was seen <b>{stats.count}</b> times among <b>{stats.total}</b> tests so far. <br/>
               That means it is <b>{percent}%</b> unique!
             </p>
           )
@@ -37,7 +37,7 @@ export function Result({ onRestart }: Props) {
         <h4>Verify this in other browsers!</h4>
         <p>
           This is your unique ID based on the applications that you have installed. <br />
-          You can also try it in other browsers, including Tor Browsers!
+          You can also try it in other browsers, including Tor Browser!
         </p>
         <BrowserIcons />
 

@@ -1,4 +1,3 @@
-import sha1 from '@cryptography/sha1'
 import { applications } from 'detector/const'
 import { isDetectionCompleted } from 'detector/detection'
 import { useDetectionProgress } from 'detector/hooks'
@@ -15,12 +14,9 @@ export function useIdentifier() {
   const progress = useDetectionProgress()
 
   if (isDetectionCompleted()) {
-    const bitstring = progress.state
-      .slice(0, applications.length) // to do: fix slicing
-      .map((item: boolean) => +item)
-      .toString()
-      .replace(/,/g, '')
-    return sha1(bitstring, 'hex').slice(0, 16)
+    const num = progress.state.reduce((acc, item, index) => acc | (+item << index), 0)
+    const xored = 0xffffff ^ num
+    return num.toString(32) + xored.toString(32)
   } else {
     return
   }
