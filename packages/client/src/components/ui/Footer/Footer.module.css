@@ -14,3 +14,9 @@
   color: rgb(137, 137, 158, 0.48);
   padding: 0 16px;
 }
+
+@media (max-width: 680px) {
+  .desktop {
+    display: none;
+  }
+}

@@ -89,9 +89,9 @@ export const applications: ApplicationCandidate[] = [
     icon: require('assets/app-icons/postman.svg').default,
   },
   {
-    title: 'Torrent',
-    scheme: 'magnet',
-    icon: require('assets/app-icons/torrent.svg').default,
+    title: 'Adobe',
+    scheme: 'aem-asset',
+    icon: require('assets/app-icons/adobe.svg').default,
   },
   {
     title: 'Messenger',

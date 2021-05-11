@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDetectionProgress } from 'detector/hooks'
 import { detectNext, DetectionResult, AlertMessage } from 'detector/detection'
-// import { isAdditinalWindowOpened } from 'detector/window'
 import { AppGrid, Centered, Footer, Logo, ProgressBar } from 'components/ui'
 // import { isAdditinalWindowOpened } from 'detector/window'
 
@@ -46,7 +45,7 @@ export function InProgress({ onAlert, onComplete }: Props) {
     <>
       <Centered>
         <Logo />
-        <h4>Wait a minute please!</h4>
+        <h4>Wait a minute please</h4>
         <p>We are detecting which applications you have installed...</p>
         <ProgressBar total={progress.total} current={progress.current} />
       

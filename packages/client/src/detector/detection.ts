@@ -118,15 +118,11 @@ export async function detectChrome() {
 
   await invokeWithFrame('main', async () => {
     if (getCurrentIndex() === 0) {
-      await wait(300)
+      await Promise.all([assetsPromise, wait(300)])
     }
 
     const handler = getAdditionalWindow()
     let isDetected = true
-
-    function flushTrigger() {
-      handler.location.replace('/pdf')
-    }
 
     const input = document.createElement('input')
     input.style.opacity = '0'
@@ -151,19 +147,19 @@ export async function detectChrome() {
 
     handler.location.replace(getCurrentApplicationUrl())
 
-    await wait(90) // emperical
+    await wait(100) // emperical
 
     input.focus()
-    await wait(10)
+    await wait(5)
     input.remove()
 
     saveDetectionResult(isDetected)
-    flushTrigger()
+    handler.location.replace('/pdf')
 
     await waitForEmbedElemet()
     await wait(250) // emperical
 
-    handler.location.href = 'about:blank'
+    handler.location.replace('about:blank')
 
     await waitForLocation('about:blank')
   })
@@ -341,4 +337,10 @@ export function setInternalApplicationState(state: ApplicationState) {
 export function getInternalApplicationState(): ApplicationState {
   const cachedState = (localStorage.getItem(APP_STATE_KEY) as ApplicationState) || undefined
   return cachedState || ApplicationState.Welcome
+}
+
+let assetsPromise: Promise<unknown>
+
+export function preloadAssets() {
+  assetsPromise = Promise.all(applications.map((item) => fetch(item.icon)))
 }

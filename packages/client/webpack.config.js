@@ -1,6 +1,7 @@
 /* eslint-disable */
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const webpack = require('webpack')
 
@@ -14,9 +15,9 @@ module.exports = (env, argv) => {
 
   // Styles
   const styleLoader = (modules) => [
-    // isProduction ? {
-    //   loader: MiniCssExtractPlugin.loader,
-    // } : 
+    isProduction ? {
+      loader: MiniCssExtractPlugin.loader,
+    } : 
     { loader: 'style-loader' },
     {
       loader: 'css-loader',
@@ -39,6 +40,14 @@ module.exports = (env, argv) => {
       template: path.join(__dirname, srcDir, 'index.html')
     }),
   ]
+
+  if (isProduction) {
+    plugins.push(
+      new MiniCssExtractPlugin({
+        filename: 'bundle.[fullhash].css',
+      })
+    )
+  }
 
   return {
     mode,
@@ -81,7 +90,7 @@ module.exports = (env, argv) => {
       ],
     },
     output: {
-      filename: 'bundle.[hash].js',
+      filename: 'bundle.[fullhash].js',
       path: path.resolve(__dirname, distDir),
       publicPath: '/',
     },

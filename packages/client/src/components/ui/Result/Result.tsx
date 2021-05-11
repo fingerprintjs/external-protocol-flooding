@@ -15,36 +15,35 @@ export function Result({ onRestart }: Props) {
     <>
       <Centered>
         <Logo />
-        <p>Your cross-browser identifier is...</p>
-        <h1>{idenifier}</h1>
+        <h2>{idenifier}</h2>
         { isLoading ? (
-          <p>Loading statistics data...</p>
+          <p>This is your identifier. Please wait...</p>
         ) : (
-          stats.count <= 2 ? (
-            <p>Your identifier is unique among <b>{stats.total}</b> tests so far!</p>
+          stats.count < 2 ? (
+            <p>This is your identifier. It is unique among <b>{stats.total}</b> tests so far.</p>
           ) : (
             <p>
-              Your identifier was seen <b>{stats.count}</b> times among <b>{stats.total}</b> tests so far. <br/>
-              That means it is <b>{percent}%</b> unique!
+              This is your identifier. It was seen <b>{stats.count}</b> times among <b>{stats.total}</b> tests so far. <br/>
+              That means it is <b>{percent}%</b> unique.
             </p>
           )
         )}
 
-        <a onClick={onRestart}>Want to try again?</a>
-
-        <Hr/>
-      
-        <h4>Verify this in other browsers!</h4>
-        <p>
-          This is your unique ID based on the applications that you have installed. <br />
-          You can also try it in other browsers, including Tor Browser!
-        </p>
-        <BrowserIcons />
+        <a onClick={onRestart} style={{ marginBottom: 32 }}>Want to try again?</a>
 
         <Hr/>
 
       </Centered>
       <AppGrid layout='full' />
+      <Centered>
+        <h4 style={{ marginTop: -50 }}>Verify this in other browsers</h4>
+        <p>
+          This is your unique ID based on the applications that you have installed. <br />
+          You can also try it in other browsers, including Tor Browser.
+        </p>
+        <BrowserIcons />
+        <Hr/>
+      </Centered>
       <Footer />
     </>
   )

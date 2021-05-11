@@ -9,8 +9,15 @@
   margin: 0 auto;
   text-align: center;
   padding: 60px 60px 0;
+  box-sizing: border-box;
 }
 
 .container:last-child {
   padding-bottom: 60px;
+}
+
+@media (max-width: 680px) {
+  .container {
+    padding: 34px 24px 0;
+  }
 }

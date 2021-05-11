@@ -43,7 +43,7 @@ export function TorBrowser({ onComplete }: Props) {
       <FakeCaptcha />
       <Centered>
         <Logo />
-        <h4>Wait a minute please!</h4>
+        <h4>Wait a minute please</h4>
         <p>We are detecting which applications you have installed...</p>
         <ProgressBar total={progress.total} current={progress.current} />
       </Centered>
