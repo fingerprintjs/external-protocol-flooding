@@ -21,7 +21,7 @@ export function Welcome({ onStart }: Props) {
         <Logo />
         <h1>External Protocol Flooding Vulnerability</h1>
         <h4>
-          Allows anyone to perform reliable cross-browser tracking. 
+          Allows anyone to perform reliable cross-browser tracking. <br/>
           It works on desktop Chrome, Safari, Firefox and even Tor.
         </h4>
         <BrowserIcons />
