@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { ApplicationCandidate } from './types'
 
+export const cover = require('assets/cover.png').default
+
 export const applications: ApplicationCandidate[] = [
   {
     title: 'Skype',
