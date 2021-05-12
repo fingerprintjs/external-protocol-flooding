@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className={styles.container}>
       <span>
-        <span className={styles.desktop}>Discovered by</span>
+        <span className={styles.desktop}>Discovered by </span>
         <a href="https://fingerprintjs.com/" target="_blank" rel="noopener" className={styles.link}>FingerprintJS</a>
       </span>
       <span className={styles.bull}>

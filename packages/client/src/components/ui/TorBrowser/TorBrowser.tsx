@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDetectionProgress } from 'detector/hooks'
 import { detectTorBrowserInline, isDetectionCompleted } from 'detector/detection'
 // import { isAdditinalWindowOpened } from 'detector/window'
@@ -13,13 +13,15 @@ export function TorBrowser({ onComplete }: Props) {
   const [latestIndex, setLatestIndex] = useState(-1)
   const progress = useDetectionProgress()
 
-  function handleUserGestureEvent() {
+  console.log(progress)
+
+  const handleUserGestureEvent = useCallback(() => {
     if (!isDetectionCompleted()) {
       detectTorBrowserInline((index) => {
         setLatestIndex(index)
       })
     }
-  }
+  }, [setLatestIndex])
 
   useEffect(() => {
     if (isDetectionCompleted()) {
@@ -28,13 +30,14 @@ export function TorBrowser({ onComplete }: Props) {
   }, [latestIndex])
 
   useEffect(() => {
-    addEventListener('keyup', handleUserGestureEvent)
-    addEventListener('click', handleUserGestureEvent)
+    window.onkeyup = handleUserGestureEvent
+    window.onclick = handleUserGestureEvent
 
     handleUserGestureEvent()
+
     return () => {
-      removeEventListener('keyup', handleUserGestureEvent)
-      removeEventListener('click', handleUserGestureEvent)
+      window.onkeyup = null
+      window.onclick = null
     }
   }, [])
 

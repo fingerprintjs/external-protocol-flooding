@@ -7,5 +7,6 @@
   for = "/*"
   [headers.values]
     cache-control = '''
-    max-age=7200,
-    public'''
+    max-age=86400,
+    public,
+    immutable'''

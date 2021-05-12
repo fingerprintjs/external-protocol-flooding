@@ -30,7 +30,7 @@ export function Welcome({ onStart }: Props) {
           <>
             <Hr/>
             <h4>
-              This demo works only for desktop browsers
+              This demo works only on desktop browsers
             </h4>
           </>
         ) : (

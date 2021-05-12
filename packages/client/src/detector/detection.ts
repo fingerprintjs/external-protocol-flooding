@@ -68,8 +68,6 @@ export function getLength() {
 export function saveDetectionResult(isDetected: boolean, current = getCurrentIndex()) {
   const state = getState()
 
-  console.log('saving', isDetected, getCurrentApplicationUrl())
-
   state[current] = isDetected
 
   localStorage.setItem(STATE_KEY, JSON.stringify(state))
@@ -89,6 +87,7 @@ export function revertLatestResult() {
  * Resets the whole detection alog
  */
 export function clearState() {
+  currentAppIndexForTorBrowser = 0
   localStorage.clear()
 }
 
@@ -289,6 +288,11 @@ export async function detectFirefox() {
 let currentAppIndexForTorBrowser = 0
 export async function detectTorBrowserInline(onComplete: (index: number) => unknown) {
   const currentIndex = currentAppIndexForTorBrowser++
+
+  if (currentIndex >= applications.length) {
+    return
+  }
+
   const iframe = document.createElement('iframe')
   iframe.src = getCurrentApplicationUrl(currentIndex)
   iframe.style.display = 'none'
