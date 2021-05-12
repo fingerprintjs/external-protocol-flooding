@@ -1,11 +1,11 @@
 The source code of the [demo](https://schemeflood.com/) for external protocol flooding **vulnerability**. Allows arbitrary websites to gather information about installed applications on a victim's computer in order to perform reliable tracking across different desktop browsers.
 
-This repository is created for the **research** and **educational** purposes only.
+This repository is created for **research** and **educational** purposes only.
 Consider reading the [original article](http://fingerprintjs.com/blog/external-protocol-flooding/) about research.
 
 ## Target Browsers
 
-The demo was successfuly tested on following browsers and operating systems:
+The demo was successfuly tested on the following browsers and operating systems:
 
 - **Chrome** 90 (Windows 10, macOS Big Sur)
 - **Firefox** 88.0.1 (Ubuntu 20.04, Windows 10, macOS Big Sur)
@@ -15,7 +15,7 @@ The demo was successfuly tested on following browsers and operating systems:
 - **Yandex Browser** 21.3.0 (Windows 10, macOS Big Sur)
 - **Microsoft Edge** 90 (Windows 10, macOS Big Sur)
 
-The vulnerability may be fixed by the time you are looking into this repository.
+The vulnerability can already be fixed by the time you find this repository.
 
 ## Technical overview
 
@@ -26,7 +26,7 @@ To check if an application is installed, browsers can use built-in custom URL sc
 To make this vulnerability possible, the following steps are required:
 
 - Prepare a list of application URL schemes that you want to test. The list may depend on your goals, for example, if you want to check if some industry or interest-specific applications are installed.
-- Add a script on a website that will test each application from your list. The script will return an ordered array of boolean values. Each boolean value is true if the application is installed or false if it is not.
+- Add a script on a website that will test each application from your list. The script will return an ordered array of boolean values. Each boolean value is `true` if the application is installed or `false` if it is not.
 - Use this array to generate a permanent cross-browser identifier.
 - Optionally, use machine learning algorithms to guess your website visitors’ occupation, interests, and age using installed application data.
 
@@ -34,7 +34,9 @@ The actual implementation of the exploit varies by browser, however the basic co
 
 ## Authors
 
-Join our team to work on exciting research in online security: [work@fingerprintjs.com](mailto:work@fingerprintjs.com)
+* https://github.com/spalt08
+
+⚡ **Join our team to work on exciting research in online security: [work@fingerprintjs.com](mailto:work@fingerprintjs.com)**
 
 This repository is MIT licensed.
 
