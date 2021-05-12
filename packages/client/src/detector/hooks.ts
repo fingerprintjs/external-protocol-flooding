@@ -1,3 +1,4 @@
+import FingerprintJS from '@fingerprintjs/fingerprintjs-pro'
 import { createAdditionalWindow } from './window'
 import { clearState, getCurrentIndex, getState } from './detection'
 import { getBrowserFamily } from './browser'
@@ -12,6 +13,17 @@ export function initDetection() {
 
   if (getBrowserFamily() !== BrowserFamily.TorBrowser) {
     createAdditionalWindow()
+  }
+}
+
+export async function getVistiorId() {
+  try {
+    const agent = await FingerprintJS.load({ token: 'CoMqqVYp2KCJlytmdjGG' })
+    const result = await agent.get()
+
+    return result.visitorId || ''
+  } catch (e) {
+    return ''
   }
 }
 

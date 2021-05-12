@@ -1,6 +1,6 @@
 import { applications } from 'detector/const'
 import { isDetectionCompleted } from 'detector/detection'
-import { useDetectionProgress } from 'detector/hooks'
+import { getVistiorId, useDetectionProgress } from 'detector/hooks'
 import { useEffect, useState } from 'react'
 
 const STATS_CACHE_KEY = '__stats'
@@ -32,19 +32,21 @@ export function useStatistics() {
 
   useEffect(() => {
     if (isDetectionCompleted() && !cacheHit) {
-      const visitorId = 'test'
       const apps = progress.state
         .map((isDetected, index) => isDetected && applications[index].title)
         .filter((item) => typeof item === 'string')
 
-      fetch('https://api.external-protocol-flooding.io/result', {
-        method: 'POST',
-        body: JSON.stringify({
-          apps,
-          visitorId,
-          fingerprint,
-        }),
-      })
+      getVistiorId()
+        .then((visitorId) =>
+          fetch('https://api.schemeflood.com/result', {
+            method: 'POST',
+            body: JSON.stringify({
+              apps,
+              visitorId,
+              fingerprint,
+            }),
+          })
+        )
         .then((response) => response.json())
         .then((data: Statistics) => {
           localStorage.setItem(STATS_CACHE_KEY, JSON.stringify(data))
