@@ -1,6 +1,6 @@
 {
-  "name": "backend",
-  "author": "Ilya Nurullin <nurullinin@mail.ru>",
+  "name": "schemeflood-backend",
+  "author": "FingerprintJS <oss@fingerprintjs.com>",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
