@@ -1,7 +1,7 @@
 {
-  "name": "cross-browser-cookie",
+  "name": "external-protocol-flooding",
   "version": "1.0.0",
-  "repository": "git@github.com:spalt08/cross-browser-cookie.git",
+  "repository": "git@github.com/fingerprintjs/external-protocol-flooding.git",
   "author": "Konstantin Darutkin <kdarutkin@gmail.com>",
   "license": "MIT",
   "private": true,
