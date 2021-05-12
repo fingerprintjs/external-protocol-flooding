@@ -35,3 +35,7 @@ The actual implementation of the exploit varies by browser, however the basic co
 ## Authors
 
 Join our team to work on exciting research in online security: [work@fingerprintjs.com](mailto:work@fingerprintjs.com)
+
+This repository is MIT licensed.
+
+Copyright 2021 FingerprintJS, Inc
