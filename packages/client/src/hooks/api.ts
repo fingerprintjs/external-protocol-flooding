@@ -1,4 +1,3 @@
-import { applications } from 'detector/const'
 import { isDetectionCompleted } from 'detector/detection'
 import { getVistiorId, useDetectionProgress } from 'detector/hooks'
 import { useEffect, useState } from 'react'
@@ -23,8 +22,7 @@ export function useIdentifier() {
 }
 
 export function useStatistics() {
-  const fingerprint = useIdentifier()
-  const progress = useDetectionProgress()
+  const appHash = useIdentifier()
   const cacheHit = localStorage.getItem(STATS_CACHE_KEY)
   const cachedStats = cacheHit ? JSON.parse(cacheHit) : { count: 0, total: 0 }
   const [stats, setStats] = useState<Statistics>(cachedStats)
@@ -32,18 +30,13 @@ export function useStatistics() {
 
   useEffect(() => {
     if (isDetectionCompleted() && !cacheHit) {
-      const apps = progress.state
-        .map((isDetected, index) => isDetected && applications[index].title)
-        .filter((item) => typeof item === 'string')
-
       getVistiorId()
         .then((visitorId) =>
-          fetch('https://api.schemeflood.com/result', {
+          fetch('https://api.schemeflood.com/app_hashes', {
             method: 'POST',
             body: JSON.stringify({
-              apps,
               visitorId,
-              fingerprint,
+              appHash,
             }),
           })
         )
