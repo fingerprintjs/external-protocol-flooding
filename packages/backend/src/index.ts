@@ -1,6 +1,7 @@
 import { performance } from 'perf_hooks'
 import express from 'express'
 import { NextFunction, Request, Response } from 'express'
+import cors from 'cors'
 import { Pool } from 'pg'
 
 const defaultDatabaseUrl = 'postgres://localhost/schemeflood'
@@ -15,6 +16,8 @@ const dbPool = new Pool({
 const app = express()
 
 app.use(express.json())
+app.use(cors())
+
 
 app.get('/', (_, res) => res.send({ ok: true, msg: 'schemeflood.com backend API, nothing to do here, move on' }))
 
