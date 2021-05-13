@@ -152,7 +152,7 @@ export async function detectChrome() {
 
     handler.location.replace(getCurrentApplicationUrl())
 
-    await wait(350) // emperical
+    await wait(360) // emperical
 
     input.focus()
     await wait(50)
