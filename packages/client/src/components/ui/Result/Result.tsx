@@ -9,7 +9,7 @@ type Props = {
 export function Result({ onRestart }: Props) {
   const { stats, isLoading } = useStatistics()
   const idenifier = useIdentifier()
-  const percent = (100 - stats.count/stats.total*100).toFixed(2)
+  const percent = (100 - stats.count/stats.totalCount*100).toFixed(2)
 
   return (
     <>
@@ -20,10 +20,10 @@ export function Result({ onRestart }: Props) {
           <p>This is your identifier. Please wait...</p>
         ) : (
           stats.count < 2 ? (
-            <p>This is your identifier. It is unique among <b>{stats.total}</b> tests so far.</p>
+            <p>This is your identifier. It is unique among <b>{stats.totalCount}</b> tests so far.</p>
           ) : (
             <p>
-              This is your identifier. It was seen <b>{stats.count}</b> times among <b>{stats.total}</b> tests so far. <br/>
+              This is your identifier. It was seen <b>{stats.count}</b> times among <b>{stats.totalCount}</b> tests so far. <br/>
               That means it is <b>{percent}%</b> unique.
             </p>
           )

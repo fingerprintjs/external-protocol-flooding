@@ -6,7 +6,7 @@ const STATS_CACHE_KEY = '__stats'
 
 type Statistics = {
   count: number
-  total: number
+  totalCount: number
 }
 
 export function useIdentifier() {
