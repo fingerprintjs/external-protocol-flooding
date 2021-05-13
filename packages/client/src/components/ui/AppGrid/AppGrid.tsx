@@ -38,11 +38,11 @@ export function AppGrid({ layout }: Props) {
     default:
       return (
         <div className={styles.wrapper}>
-          <p>based on data scanned from {detectedApps.length} applications you have installed</p>
+          <p>We have generated your identifier based on {detectedApps.length} applications you have installed.</p>
           <ul className={styles.container}>
             {detectedApps}
           </ul>
-          <p>out of {applications.length} applications in our database</p>
+          <p>Out of {applications.length} applications in our database.</p>
           <ul className={styles.container}>
             {notDetectedApps}
           </ul>

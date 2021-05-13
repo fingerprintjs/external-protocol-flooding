@@ -36,10 +36,9 @@ export function Result({ onRestart }: Props) {
       </Centered>
       <AppGrid layout='full' />
       <Centered>
-        <h4 style={{ marginTop: -50 }}>Verify this in other browsers</h4>
+        <h4 style={{ marginTop: -50 }}>Verify your result in other browsers</h4>
         <p>
-          This is your unique ID based on the applications that you have installed. <br />
-          You can also try it in other browsers, including Tor Browser.
+          Compare your identifier by running this demo in other browsers, including Tor Browser.
         </p>
         <BrowserIcons />
         <Hr/>

@@ -34,6 +34,9 @@ export function useStatistics() {
         .then((visitorId) =>
           fetch('https://api.schemeflood.com/app_hashes', {
             method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
               visitorId,
               appHash,

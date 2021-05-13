@@ -37,7 +37,8 @@ module.exports = (env, argv) => {
   // Plugins
   const plugins = [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, srcDir, 'index.html')
+      template: path.join(__dirname, srcDir, 'index.html'),
+      favicon: path.join(__dirname, srcDir, 'assets/favicon.ico')
     }),
   ]
 
@@ -76,7 +77,7 @@ module.exports = (env, argv) => {
           use: styleLoader(true)
         },
         {
-          test: /\.(png|jpg|pdf|svg)$/,
+          test: /\.(png|jpg|pdf|svg|ico)$/,
           use: [
             {
               loader: 'file-loader',
