@@ -105,6 +105,12 @@ export function getCurrentApplicationUrl(index = getCurrentIndex()) {
   return `${applications[index]?.scheme}://test`
 }
 
+const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE']
+const isWindows = windowsPlatforms.indexOf(navigator.platform)
+function conditionalTiming(normal: number, windows: number) {
+  return isWindows ? windows : normal
+}
+
 export async function detectChrome() {
   if (isDetectionCompleted()) {
     setInternalApplicationState(ApplicationState.Ready)
@@ -117,7 +123,7 @@ export async function detectChrome() {
 
   await invokeWithFrame('main', async () => {
     if (getCurrentIndex() === 0) {
-      await Promise.all([assetsPromise, wait(350)])
+      await Promise.all([assetsPromise, wait(conditionalTiming(300, 350))])
     }
 
     const handler = getAdditionalWindow()
@@ -130,7 +136,7 @@ export async function detectChrome() {
       isDetected = false
     }
 
-    await wait(250) // emperical
+    await wait(conditionalTiming(40, 100)) // emperical
 
     const isBrowserActive = document.hasFocus() || handler.document.hasFocus()
     if (!isBrowserActive) {
@@ -146,17 +152,17 @@ export async function detectChrome() {
 
     handler.location.replace(getCurrentApplicationUrl())
 
-    await wait(200) // emperical
+    await wait(conditionalTiming(75, 125)) // emperical
 
     input.focus()
-    await wait(15)
+    await wait(conditionalTiming(5, 15))
     input.remove()
 
     saveDetectionResult(isDetected)
     handler.location.replace('/pdf')
 
     await waitForEmbedElemet()
-    await wait(1000) // emperical
+    await wait(conditionalTiming(250, 500)) // emperical
 
     handler.location.replace('about:blank')
 
