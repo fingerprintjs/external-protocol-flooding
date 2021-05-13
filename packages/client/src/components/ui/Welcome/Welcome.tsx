@@ -31,7 +31,7 @@ export function Welcome({ onStart }: Props) {
         </h4>
         <BrowserIcons />
 
-        {true && (
+        {isChromeLinux && (
           <>
             <h4>This demo may work incorrect on Chrome on Linux</h4>
             <a onClick={handleStart}>Try it anyway</a>
@@ -47,7 +47,7 @@ export function Welcome({ onStart }: Props) {
           </>
         )}
       
-        {false && !isChromeLinux && !isMobile && (
+        {!isChromeLinux && !isMobile && (
           <>
             <button onClick={handleStart}>Get My Identifier</button>
             <TermsAccept />
