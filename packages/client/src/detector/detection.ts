@@ -130,7 +130,7 @@ export async function detectChrome() {
       isDetected = false
     }
 
-    await wait(150) // emperical
+    await wait(250) // emperical
 
     const isBrowserActive = document.hasFocus() || handler.document.hasFocus()
     if (!isBrowserActive) {
@@ -156,7 +156,7 @@ export async function detectChrome() {
     handler.location.replace('/pdf')
 
     await waitForEmbedElemet()
-    await wait(800) // emperical
+    await wait(1000) // emperical
 
     handler.location.replace('about:blank')
 
