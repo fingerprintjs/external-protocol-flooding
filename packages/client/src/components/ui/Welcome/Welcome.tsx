@@ -33,7 +33,7 @@ export function Welcome({ onStart }: Props) {
 
         {isChromeLinux && (
           <>
-            <h4>This demo may work incorrect on Chrome on Linux</h4>
+            <h4>This demo may work incorrectly in Chrome on Linux</h4>
             <a onClick={handleStart}>Try it anyway</a>
           </>
         )}

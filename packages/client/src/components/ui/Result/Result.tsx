@@ -15,7 +15,7 @@ export function Result({ onRestart }: Props) {
     <>
       <Centered>
         <Logo />
-        <h2>{idenifier}</h2>
+        <h1>{idenifier?.toUpperCase()}</h1>
         { isLoading ? (
           <p>This is your identifier. Please wait...</p>
         ) : (
