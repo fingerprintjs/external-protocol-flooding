@@ -32,19 +32,24 @@ app.post('/app_hashes', async (req, res) => {
   }
 
   let count = 0
+  let totalCount = 0
+
   try {
     const startedTimestamp = performance.now()
-    const { rows } =
+    let result =
       await dbPool.query('SELECT COUNT(1) as count FROM app_hashes WHERE app_hash = $1', [appHash])
 
-    count = rows[0].count
+    count = result.rows[0].count
+
+    result = await dbPool.query('SELECT COUNT(id) as count FROM app_hashes')
+    totalCount = result.rows[0].count
 
     await dbPool.query('INSERT INTO app_hashes (visitor_id, app_hash) VALUES ($1, $2)', [
       visitorId,
       appHash,
     ])
     const duration = Math.round(performance.now() - startedTimestamp)
-    res.status(202).send({ ok: true, duration: `${duration}ms`, count })
+    res.status(202).send({ ok: true, duration: `${duration}ms`, count, totalCount })
   } catch (e) {
     console.error(e)
     res.status(422).send({ ok: false, error: 'Failed to add appHash' })
