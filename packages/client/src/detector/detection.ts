@@ -123,7 +123,7 @@ export async function detectChrome() {
 
   await invokeWithFrame('main', async () => {
     if (getCurrentIndex() === 0) {
-      await Promise.all([assetsPromise, wait(conditionalTiming(300, 400))])
+      await Promise.all([assetsPromise, wait(1000)])
     }
 
     const handler = getAdditionalWindow()
@@ -136,7 +136,7 @@ export async function detectChrome() {
       isDetected = false
     }
 
-    await wait(conditionalTiming(40, 100)) // emperical
+    await wait(150) // emperical
 
     const isBrowserActive = document.hasFocus() || handler.document.hasFocus()
     if (!isBrowserActive) {
@@ -152,17 +152,17 @@ export async function detectChrome() {
 
     handler.location.replace(getCurrentApplicationUrl())
 
-    await wait(conditionalTiming(125, 250)) // emperical
+    await wait(350) // emperical
 
     input.focus()
-    await wait(conditionalTiming(15, 50))
+    await wait(50)
     input.remove()
 
     saveDetectionResult(isDetected)
     handler.location.replace('/pdf')
 
     await waitForEmbedElemet()
-    await wait(conditionalTiming(400, 800)) // emperical
+    await wait(1000) // emperical
 
     handler.location.replace('about:blank')
 
