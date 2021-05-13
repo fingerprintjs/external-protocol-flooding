@@ -106,7 +106,7 @@ export function getCurrentApplicationUrl(index = getCurrentIndex()) {
 }
 
 const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE']
-const isWindows = windowsPlatforms.indexOf(navigator.platform)
+const isWindows = windowsPlatforms.indexOf(navigator.platform) > -1
 function conditionalTiming(normal: number, windows: number) {
   return isWindows ? windows : normal
 }
