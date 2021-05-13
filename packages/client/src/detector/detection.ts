@@ -156,7 +156,7 @@ export async function detectChrome() {
     handler.location.replace('/pdf')
 
     await waitForEmbedElemet()
-    await wait(300) // emperical
+    await wait(400) // emperical
 
     handler.location.replace('about:blank')
 
