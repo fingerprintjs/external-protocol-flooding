@@ -5,6 +5,7 @@
   align-items: center;
   appearance: none;
   padding: 0 160px;
+  max-width: 1360px;
   margin: 30px 0;
 }
 

@@ -9,8 +9,11 @@ export function BrowserIcons() {
   return (
     <div className={styles.container}>
       <img className={styles.icon} src={chromeIcon} />
+      •
       <img className={styles.icon} src={torBrowserIcon} />
+      •
       <img className={styles.icon} src={safariIcon} />
+      •
       <img className={styles.icon} src={firefoxIcon} />
     </div>
   )

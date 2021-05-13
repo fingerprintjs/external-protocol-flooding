@@ -4,7 +4,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  color: #89899e;
+  color: rgba(130, 116, 149, 0.64);
   font-size: 14px;
   line-height: 24px;
 }
