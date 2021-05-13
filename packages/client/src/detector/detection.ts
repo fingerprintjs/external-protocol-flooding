@@ -105,12 +105,6 @@ export function getCurrentApplicationUrl(index = getCurrentIndex()) {
   return `${applications[index]?.scheme}://test`
 }
 
-const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE']
-const isWindows = windowsPlatforms.indexOf(navigator.platform)
-function conditionalTiming(normal: number, windows: number) {
-  return isWindows ? windows : normal
-}
-
 export async function detectChrome() {
   if (isDetectionCompleted()) {
     setInternalApplicationState(ApplicationState.Ready)
