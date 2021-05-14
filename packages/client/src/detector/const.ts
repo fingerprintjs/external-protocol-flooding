@@ -25,6 +25,21 @@ export const applications: ApplicationCandidate[] = [
     icon: require('assets/app-icons/vscode.svg').default,
   },
   {
+    title: 'Ableton Live',
+    scheme: 'ableton',
+    icon: require('assets/app-icons/ableton.svg').default,
+  },
+  {
+    title: 'Atom',
+    scheme: 'atom',
+    icon: require('assets/app-icons/atom.svg').default,
+  },
+  {
+    title: 'Drawpile',
+    scheme: 'drawpile',
+    icon: require('assets/app-icons/drawpieg').default,
+  },
+  {
     title: 'Github Desktop',
     scheme: 'x-github-client',
     icon: require('assets/app-icons/github.svg').default,
