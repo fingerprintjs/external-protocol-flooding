@@ -60,6 +60,11 @@ export const applications: ApplicationCandidate[] = [
     icon: require('assets/app-icons/battlenet.svg').default,
   },
   {
+    title: 'Itch.io',
+    scheme: 'itch',
+    icon: require('assets/app-icons/itch.svg').default,
+  },
+  {
     title: 'Xcode',
     scheme: 'xcode',
     icon: require('assets/app-icons/xcode.png').default,
