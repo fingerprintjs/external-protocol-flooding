@@ -37,7 +37,22 @@ export const applications: ApplicationCandidate[] = [
   {
     title: 'Drawpile',
     scheme: 'drawpile',
-    icon: require('assets/app-icons/drawpieg').default,
+    icon: require('assets/app-icons/drawpile.svg').default,
+  },
+  {
+    title: 'Origin',
+    scheme: 'origin',
+    icon: require('assets/app-icons/origin.svg').default,
+  },
+  {
+    title: 'Twitch',
+    scheme: 'twitch',
+    icon: require('assets/app-icons/twitch.svg').default,
+  },
+  {
+    title: 'Wire',
+    scheme: 'wire',
+    icon: require('assets/app-icons/wire.svg').default,
   },
   {
     title: 'Github Desktop',
