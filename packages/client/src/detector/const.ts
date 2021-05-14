@@ -85,6 +85,11 @@ export const applications: ApplicationCandidate[] = [
     icon: require('assets/app-icons/nordvpn.png').default,
   },
   {
+    title: 'Bitwarden',
+    scheme: 'bitwarden',
+    icon: require('assets/app-icons/bitwarden.svg').default,
+  },
+  {
     title: 'Sketch',
     scheme: 'sketch',
     icon: require('assets/app-icons/sketch.svg').default,
