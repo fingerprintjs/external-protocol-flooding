@@ -25,6 +25,11 @@ export const applications: ApplicationCandidate[] = [
     icon: require('assets/app-icons/vscode.svg').default,
   },
   {
+    title: 'Github Desktop',
+    scheme: 'x-github-client',
+    icon: require('assets/app-icons/github.svg').default,
+  },
+  {
     title: 'Epic Games',
     scheme: 'com.epicgames.launcher',
     icon: require('assets/app-icons/epic-games.svg').default,
@@ -58,6 +63,16 @@ export const applications: ApplicationCandidate[] = [
     title: 'Xcode',
     scheme: 'xcode',
     icon: require('assets/app-icons/xcode.png').default,
+  },
+  {
+    title: 'Roblox',
+    scheme: 'roblox-player',
+    icon: require('assets/app-icons/roblox.svg').default,
+  },
+  {
+    title: 'Roblox Studio',
+    scheme: 'roblox-studio',
+    icon: require('assets/app-icons/robloxstudio.svg').default,
   },
   {
     title: 'NordVPN',
