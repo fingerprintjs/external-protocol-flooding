@@ -173,7 +173,7 @@ export async function detectChrome() {
 }
 export async function detectSafari() {
   onMessage('redirected', async () => {
-    await wait(30)
+    await wait(55)
     const handler = getAdditionalWindow()
 
     try {
@@ -197,7 +197,7 @@ export async function detectSafari() {
   })
 
   onMessage('force_reload', async () => {
-    await wait(30)
+    await wait(55)
     document.location.reload()
   })
 
