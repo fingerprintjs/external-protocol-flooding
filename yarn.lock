@@ -70,7 +70,7 @@
     "@fingerprintjs/fingerprintjs" "3.1.2"
     tslib "^2.0.1"
 
-"@fingerprintjs/fingerprintjs@3.1.2":
+"@fingerprintjs/fingerprintjs@3.1.2", "@fingerprintjs/fingerprintjs@^3.1.2":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@fingerprintjs/fingerprintjs/-/fingerprintjs-3.1.2.tgz#d10ae3f29b70236703dc266094f999134ec9c846"
   integrity sha512-voyRD+FrqLWJksQyB94OELKYNkL67MC5Wx7g9VHfhPDIC+SMgI84L2c4rynO/eSHqV2LVfPKqpR+T0oRE/+7ow==
