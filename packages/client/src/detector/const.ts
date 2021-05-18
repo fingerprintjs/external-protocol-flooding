@@ -125,4 +125,44 @@ export const applications: ApplicationCandidate[] = [
     scheme: 'itunes',
     icon: require('assets/app-icons/itunes.svg').default,
   },
+  {
+    title: 'Ableton Live',
+    scheme: 'ableton',
+    icon: require('assets/app-icons/ableton.png').default,
+  },
+  {
+    title: 'Origin',
+    scheme: 'origin',
+    icon: require('assets/app-icons/origin.png').default,
+  },
+  {
+    title: 'Insomnia',
+    scheme: 'insomnia',
+    icon: require('assets/app-icons/insomnia.png').default,
+  },
+  {
+    title: 'Adobe XD',
+    scheme: 'adbxd',
+    icon: require('assets/app-icons/adbxd.svg').default,
+  },
+  {
+    title: 'Adobe Photoshop',
+    scheme: 'adbps',
+    icon: require('assets/app-icons/photoshop.svg').default,
+  },
+  {
+    title: 'Adobe Illustrator',
+    scheme: 'adbai',
+    icon: require('assets/app-icons/illustrator.svg').default,
+  },
+  {
+    title: 'Signal',
+    scheme: 'sgnl',
+    icon: require('assets/app-icons/signal.svg').default,
+  },
+  {
+    title: 'Microsoft Store',
+    scheme: 'zune',
+    icon: require('assets/app-icons/microsoft-store.png').default,
+  },
 ]
