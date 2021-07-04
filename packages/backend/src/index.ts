@@ -19,7 +19,7 @@ app.use(express.json())
 app.use(cors())
 
 
-app.get('/', (_, res) => res.send({ ok: true, msg: 'schemeflood.com backend API, nothing to do here, move on' }))
+app.get('/', (_, res) => res.send({ ok: true, msg: 'backend API, nothing to do here, move on' }))
 
 app.post('/app_hashes', async (req, res) => {
   const { visitorId, appHash } = req.body
@@ -64,5 +64,5 @@ app.use((err: Error, _req: Request, res: Response, next: NextFunction) => {
 
 const port = process.env.PORT ?? 3000
 app.listen(port, () => {
-  console.log(`schemeflood.com backend listening on port ${port}`)
+  console.log(`backend listening on port ${port}`)
 })

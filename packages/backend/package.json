@@ -1,10 +1,11 @@
 {
   "name": "schemeflood-backend",
   "author": "FingerprintJS <oss@fingerprintjs.com>",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node ./src/index.ts"
+    "start": "ts-node ./src/index.ts",
+    "build": "tsc --outDir ./build"
   },
   "devDependencies": {
     "@types/express": "^4.17.11",
