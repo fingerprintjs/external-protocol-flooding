@@ -1,7 +1,7 @@
 import { BrowserFamily } from './types'
+import { isDesktopSafari, isGecko } from '@fingerprintjs/fingerprintjs'
 
 export function getBrowserFamily(): BrowserFamily {
-  const userAgent = navigator.userAgent.toLowerCase()
   const noWebRTC = +!('RTCDataChannel' in window)
   const noPointerEvent = +!('PointerEvent' in window)
   const noAudioBuffer = +!('AudioBuffer' in window)
@@ -11,13 +11,14 @@ export function getBrowserFamily(): BrowserFamily {
     return BrowserFamily.TorBrowser
   }
 
-  if (userAgent.includes('chrome')) {
-    return BrowserFamily.Chrome
-  } else if (userAgent.includes('safari')) {
+  if (isDesktopSafari()) {
     return BrowserFamily.Safari
-  } else if (userAgent.includes('firefox')) {
+  } else if (isGecko()) {
     return BrowserFamily.Firefox
+  } else {
+    // if (isChromium()) {
+    return BrowserFamily.Chrome
   }
 
-  return BrowserFamily.Unknown
+  // return BrowserFamily.Unknown
 }
