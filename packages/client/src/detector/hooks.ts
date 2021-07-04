@@ -20,7 +20,7 @@ export async function getVistiorId() {
   try {
     const agent = await FingerprintJS.load({
       token: 'k3Fv9ygx1xhQ1NxFOsVA',
-      endpoint: 'https://f.schemeflood.com',
+      endpoint: 'https://fp.schemeflood.com',
     })
     const result = await agent.get()
 
