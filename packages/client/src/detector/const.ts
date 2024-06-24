@@ -25,6 +25,41 @@ export const applications: ApplicationCandidate[] = [
     icon: require('assets/app-icons/vscode.svg').default,
   },
   {
+    title: 'Ableton Live',
+    scheme: 'ableton',
+    icon: require('assets/app-icons/ableton.svg').default,
+  },
+  {
+    title: 'Atom',
+    scheme: 'atom',
+    icon: require('assets/app-icons/atom.svg').default,
+  },
+  {
+    title: 'Drawpile',
+    scheme: 'drawpile',
+    icon: require('assets/app-icons/drawpile.svg').default,
+  },
+  {
+    title: 'Origin',
+    scheme: 'origin',
+    icon: require('assets/app-icons/origin.svg').default,
+  },
+  {
+    title: 'Twitch',
+    scheme: 'twitch',
+    icon: require('assets/app-icons/twitch.svg').default,
+  },
+  {
+    title: 'Wire',
+    scheme: 'wire',
+    icon: require('assets/app-icons/wire.svg').default,
+  },
+  {
+    title: 'Github Desktop',
+    scheme: 'x-github-client',
+    icon: require('assets/app-icons/github.svg').default,
+  },
+  {
     title: 'Epic Games',
     scheme: 'com.epicgames.launcher',
     icon: require('assets/app-icons/epic-games.svg').default,
@@ -55,14 +90,34 @@ export const applications: ApplicationCandidate[] = [
     icon: require('assets/app-icons/battlenet.svg').default,
   },
   {
+    title: 'Itch.io',
+    scheme: 'itch',
+    icon: require('assets/app-icons/itch.svg').default,
+  },
+  {
     title: 'Xcode',
     scheme: 'xcode',
     icon: require('assets/app-icons/xcode.png').default,
   },
   {
+    title: 'Roblox',
+    scheme: 'roblox-player',
+    icon: require('assets/app-icons/roblox.svg').default,
+  },
+  {
+    title: 'Roblox Studio',
+    scheme: 'roblox-studio',
+    icon: require('assets/app-icons/robloxstudio.svg').default,
+  },
+  {
     title: 'NordVPN',
     scheme: 'nordvpn',
     icon: require('assets/app-icons/nordvpn.png').default,
+  },
+  {
+    title: 'Bitwarden',
+    scheme: 'bitwarden',
+    icon: require('assets/app-icons/bitwarden.svg').default,
   },
   {
     title: 'Sketch',
